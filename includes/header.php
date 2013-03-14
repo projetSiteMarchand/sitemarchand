@@ -16,8 +16,10 @@ $_SESSION['token'] = hash('crc32',mt_rand());
 		<script src="js/bootstrap.min.js" type="application/javascript"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+		<nav class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
+<div class="container">
+			<a class="brand" href="<?php echo SITE;?>"><img src="img/logo.png"/></a>
 			<ul class="nav">
 <?php
 if($membre = Membre::connecte())
@@ -34,8 +36,8 @@ else
 					<a href="?rubrique=site&action=apropos" title="À propos">À propos</a>
 				</li>
 			</ul>
-			<a class="brand" href="<?php echo SITE;?>">Vente Social</a>
 			</div>
+</div>
 		</nav>
 		<div class="container">
 		<div class="row">
@@ -45,10 +47,12 @@ if($membre)
 ?>
 			<div class="span3">
 				<ul class="nav nav-list well">
+					<li class="nav-header">Panier</li>
 					<li class="nav-header">Membre</li>
 					<li><a href="?rubrique=membres&action=deconnexion&token=<?php echo $_SESSION['token'];?>" title="Se déconnecter"><i class="icon-remove"></i> Déconnexion</a></li>
 					<li><a href="?rubrique=membres&action=mon-compte" title="Mon compte"><i class="icon-briefcase"></i> Mon compte</a></li>
 					<li><a href="?rubrique=membres&action=voir-profil" title="Voir mon profil"><i class="icon-eye-open"></i> Voir mon profil</a></li>
+					<li class="nav-header">Messagerie</li>
 				</ul>
 			</div>
 <?php

@@ -4053,8 +4053,8 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .brand {
   display: block;
-  float: right;
-  padding: 10px 20px 10px;
+  float: left;
+  padding: 4px 20px 10px;
   margin-left: -20px;
   font-size: 20px;
   font-weight: 200;
@@ -5623,4 +5623,4 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
-#succes,#informations,#erreurs{margin-top:20px}
+/*#succes,#informations,#erreurs{margin-top:20px}*/

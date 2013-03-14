@@ -2,7 +2,9 @@
 defined('ALLOWED') or die();
 if($membre = Membre::connecte())
 {
+	include HEADER;
 	include VUE.'mon-compte.php';
+	include FOOTER;
 	die();
 }
 elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
