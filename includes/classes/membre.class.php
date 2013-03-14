@@ -1,6 +1,9 @@
 <?php
 class Membre
 {
+	public static $maxPseudo = 20;
+	public static $minPseudo = 3;
+
 	private static $nomTable = 'membres';
 	private $id;
 	private $prenom;
