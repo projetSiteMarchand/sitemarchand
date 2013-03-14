@@ -1,7 +1,28 @@
 <?php
 class Membre
 {
-	private static $nomTable = 'membres';
+	public static $maxPseudo = 20;
+	public static $minPseudo = 3;
+
+	public static $maxPrenom = 30;
+	public static $minPrenom = 3;
+
+	public static $maxNom = 30;
+	public static $minNom = 3;
+
+	public static $maxVille = 40;
+	public static $minVille = 1;
+
+	public static $maxAdressePostale = 40;
+	public static $minAdressePostale = 3;
+
+	public static $maxCodePostal = 6;
+	public static $minCodePostal = 5;
+
+	public static $maxMail = 40;
+	public static $minMail = 5;
+
+	private static $nomTable = 'MEMBRE';
 	private $id;
 	private $prenom;
 	private $nom;
@@ -30,86 +51,18 @@ class Membre
 		$this->adressePostale  = $adressePostale;
 	}
 
-	public function __construct($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale)
-	{
-		$this->id  = $id;
-		$this->prenom  = $prenom;
-		$this->nom  = $nom;
-		$this->statut  = $statut;
-		$this->pseudo  = $pseudo;
-		$this->ville  = $ville;
-		$this->codePostal  = $codePostal;
-		$this->mail  = $mail;
-		$this->dateInscription  = $dateInscription;
-		$this->dateDerniereConnexion = $dateDerniereConnexion;
-		$this->adressePostale  = $adressePostale;
-	}
-
-	private function unserializeSession($data)
-	{
-    		if(strlen($data) == 0)
-    		{
-        		return array();
-    		}
-    		// match all the session keys and offsets
-    		preg_match_all('/(^|;|\})([a-zA-Z0-9_]+)\|/i', $data, $matchesarray, PREG_OFFSET_CAPTURE);
-    		$returnArray = array();
-    		$lastOffset = null;
-    		$currentKey = '';
-    		foreach($matchesarray[2] as $value )
-    		{
-        		$offset = $value[1];
-        		if(!is_null( $lastOffset))
-        		{
-            			$valueText = substr($data, $lastOffset, $offset - $lastOffset );
-            			$returnArray[$currentKey] = unserialize($valueText);
-        		}
-        		$currentKey = $value[0];
-
-        		$lastOffset = $offset + strlen( $currentKey )+1;
-    		}
-
-    		$valueText = substr($data, $lastOffset );
-    		$returnArray[$currentKey] = unserialize($valueText);
-
-    		return $returnArray;
-	}
 
 	/**
 		* @brief Déconnecte le membre
 		*
-		* @return TRUE si la déconnexion a réussi, FALSE sinon
 	 */
 	public function deconnecter()
 	{
-		$sessionPath = session_save_path();
-		$sessionPath = (empty($sessionPath) ? '/tmp/' : $sessionPath);
-		if(is_dir($sessionPath))
-		{
-			if($dh = opendir($sessionPath))
-			{
-				while (($filename = readdir($dh)) !== false)
-				{
-					if(preg_match('`^sess_*`',$filename))
-					{
-						$data = unserializeSession(file_get_contents($sessionPath.'/'.$filename));
-						if(array_key_exists('id',$data))
-						{
-							if($data['id'] == $this->id)
-							{
-								if(unlink($sessionPath.'/'.$filename))
-								{
-									closedir($dh);
-									return TRUE;
-								}
-							}
-						}
-					}
-				}
-				closedir($dh);
-			}
-		}
-		return FALSE;
+		session_unset();
+		session_destroy();
+		session_write_close();
+		setcookie(session_name(),'',1);
+		session_regenerate_id(true);
 	}
 
 	/**
@@ -120,6 +73,16 @@ class Membre
 	public function getId()
 	{
 		return $this->id;
+	}
+
+	/**
+		* @brief Récupère le pseudo du membre
+		*
+		* @return Le pseudo du membre
+	 */
+	public function getPseudo()
+	{
+		return $this->pseudo;
 	}
 
 	/**
@@ -245,6 +208,112 @@ class Membre
 		}
 	}
 
+	private static function unserializeSession($data)
+	{
+    		if(strlen($data) == 0)
+    		{
+        		return array();
+    		}
+    		// match all the session keys and offsets
+    		preg_match_all('/(^|;|\})([a-zA-Z0-9_]+)\|/i', $data, $matchesarray, PREG_OFFSET_CAPTURE);
+    		$returnArray = array();
+    		$lastOffset = null;
+    		$currentKey = '';
+    		foreach($matchesarray[2] as $value )
+    		{
+        		$offset = $value[1];
+        		if(!is_null( $lastOffset))
+        		{
+            			$valueText = substr($data, $lastOffset, $offset - $lastOffset );
+            			$returnArray[$currentKey] = unserialize($valueText);
+        		}
+        		$currentKey = $value[0];
+
+        		$lastOffset = $offset + strlen( $currentKey )+1;
+    		}
+
+    		$valueText = substr($data, $lastOffset );
+    		$returnArray[$currentKey] = unserialize($valueText);
+
+    		return $returnArray;
+	}
+
+	/**
+		* @brief Déconnecte un membre
+		*
+		* @param $membre Membre à déconnecter
+		*
+		* @return  TRUE si la déconnexion a réussie, FALSE sinon
+	 */
+	public static function deconnecterMembre($membre)
+	{
+		$id = $membre->id;
+		$sessionPath = session_save_path();
+		$sessionPath = (empty($sessionPath) ? '/tmp/' : $sessionPath);
+		if(is_dir($sessionPath))
+		{
+			if($dh = opendir($sessionPath))
+			{
+				while (($filename = readdir($dh)) !== false)
+				{
+					if(preg_match('`^sess_*`',$filename))
+					{
+						$data = self::unserializeSession(file_get_contents($sessionPath.'/'.$filename));
+						if(array_key_exists('id',$data))
+						{
+							if($data['id'] == $this->id)
+							{
+								if(unlink($sessionPath.'/'.$filename))
+								{
+									closedir($dh);
+									return TRUE;
+								}
+							}
+						}
+					}
+				}
+				closedir($dh);
+			}
+		}
+		session_unset();
+		session_destroy();
+		session_write_close();
+		setcookie(session_name(),'',1);
+		session_regenerate_id(true);
+		return FALSE;
+	}
+
+	/**
+		* @brief Déconnecte et supprime un membre de la base de données
+		*
+		* @param $membre
+		*
+		* @return TRUE si la suppression a réussi, FALSE sinon
+	 */
+	public static function supprimerMembre($membre)
+	{
+		$id = $membre->id;
+		$messages = Messages::getInstance();
+		if(self::deconnecterMembre())
+			$messages->ajouterInformation('Le membre a été déconnecté.');
+		else
+			$messages->ajouterErreur('Le membre n\'a pas été déconnecté.');
+
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+	}
 	/**
 		* @brief Génère de manière pseudo-aléatoire un sel pour l'algorithme blowfish
 		*
@@ -252,16 +321,18 @@ class Membre
 	 */
 	public static function generateSalt($log = 13)
 	{
-		$output = ''; 
-		if(is_readable('/dev/urandom') && ($fopen = fopen('/dev/urandom', 'rb')))
-		{
-			$output = fread($fopen, 32);
-			fclose($fopen);
-		}
-		else
-		{
+		/*
+		 *$output = ''; 
+		 *if(is_readable('/dev/urandom') && ($fopen = fopen('/dev/urandom', 'rb')))
+		 *{
+		 *        $output = fread($fopen, 32);
+		 *        fclose($fopen);
+		 *}
+		 *else
+		 *{
+		 */
 			$output = hash('md5',uniqid('',TRUE));
-		}
+		//}
 
 		//Pour blowfish le salt doit faire 22 charsa
 		//On met le log utilisé dans le salt pour pouvoir le récupérer et éviter de stocker un nouveau champ, et éviter que le boulet sache qu'on utilise du blowfish avec le nom de ce nouveau champ
@@ -307,7 +378,7 @@ class Membre
 		$validation_hash = md5(self::generateSalt());
 		$hashPassword = self::hashPassword($password,$sel);
 		$pdo = PDO2::getInstance();
-		$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (validation_hash,pseudo,mdp,sel,mail, nom, prenom, statut,ville,codePostal,adressePostale,dateInscription,dateDerniereConnexion) VALUES(:validation_hash,:pseudo,:hashPassword,:sel,:mail, :nom,:prenom,:statut,:ville,:codePostal,:adressePostale,:dateInscription,:dateDerniereConnexion)');
+		$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (validation_hash,pseudo,password,sel,mail, nom, prenom, statut,ville,codePostal,adressePostale,dateInscription,dateDerniereConnexion) VALUES(:validation_hash,:pseudo,:hashPassword,:sel,:mail, :nom,:prenom,:statut,:ville,:codePostal,:adressePostale,:dateInscription,:dateDerniereConnexion)');
 		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
 		$requete->bindValue(':hashPassword',$hashPassword,PDO::PARAM_STR);
 		$requete->bindValue(':sel',$sel,PDO::PARAM_STR);
@@ -325,7 +396,7 @@ class Membre
 		{
 			$id = $pdo->lastInsertId();
 			$requete->closeCursor();
-			return new Membre($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale);
+			return new Membre(array($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale));
 		}
 		else
 		{
@@ -387,7 +458,7 @@ class Membre
 				FROM '.self::$nomTable.'
 				WHERE pseudo=:pseudo AND password=:password');
 			$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
-			$requete->bindValue(':password',hashPassword($password,$sel),PDO::PARAM_STR);
+			$requete->bindValue(':password',self::hashPassword($password,$sel),PDO::PARAM_STR);
 			if(!$requete->execute())
 			{
 				$messages = Messages::getInstance();
@@ -426,7 +497,7 @@ class Membre
 		}
 		else
 		{
-			hashPassword('canardEnPlastique',generateSalt());//Pour éviter les timing attacks
+			self::hashPassword('canardEnPlastique',self::generateSalt());//Pour éviter les timing attacks
 			$messages->ajouterErreur('Le nom d\'utilisateur et/ou le mot de passe sont incorrects ou inexistants, veuillez réessayer.');
 			return FALSE;
 		}
@@ -528,6 +599,54 @@ class Membre
 			$requete->closeCursor();
 			return FALSE;
 		}
+	}
+
+	/**
+		* @brief Vérifie si le membre est connecté
+		*
+		* @return L'instance du membre connecté s'il l'est, FALSE sinon
+	 */
+	public static function connecte()
+	{
+		if(!empty($_SESSION['membre'])
+			&& !empty($_SESSION['user_agent'])
+			&& !empty($_SESSION['ip'])
+			&& $_SESSION['ip'] == $_SERVER['REMOTE_ADDR']
+			&& $_SESSION['user_agent'] == $_SERVER['HTTP_USER_AGENT'])
+		{
+			return $_SESSION['membre'];
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	/**
+		* @brief Vérifie si un pseudo est déjà utilisé
+		*
+		* @param $pseudo pseudo à vérifier
+		*
+		* @return TRUE si le pseudo n'est pas utilisé, FALSE sinon
+	 */
+	public static function checkPseudo($pseudo)
+	{
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('SELECT COUNT(*) FROM '.self::$nomTable.' WHERE pseudo=:pseudo');
+		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
+		if(!$requete->execute())
+		{
+			$messages = Messages::getInstance();
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+		$nb = $requete->fetchColumn();
+		$requete->closeCursor();
+		if($nb > 0)
+			return FALSE;
+		else
+			return TRUE;
 	}
 }
 ?>

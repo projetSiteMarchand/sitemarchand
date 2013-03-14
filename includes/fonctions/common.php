@@ -3,21 +3,6 @@ function nombreValide($n)
 {
 	return (is_numeric($n) && $n > 0 && $n <= 2147483647);
 }
-function connecte()
-{
-	if(!empty($_SESSION['username'])
-		&& !empty($_SESSION['id'])
-		&& !empty($_SESSION['droits'])
-		&& !empty($_SESSION['user_agent'])
-		&& !empty($_SESSION['ip'])
-		&& $_SESSION['ip'] == $_SERVER['REMOTE_ADDR']
-		&& $_SESSION['user_agent'] == $_SERVER['HTTP_USER_AGENT'])
-	{
-		return TRUE;
-	}
-	else
-		return FALSE;
-}
 function protegerAffichage($string,$flags = ENT_QUOTES)
 {
 	if(is_array($string))
