@@ -33,7 +33,7 @@ define('AFFICHER_ERREURS',1);
 define('MAINTENANCE',0);
 define('CHARSET','UTF-8');
 define('TITRE_SITE','Vente Social');
-define('SITE',$_SERVER['SERVER_NAME'].'/sitemarchand/public/');
+define('SITE','http://'.$_SERVER['SERVER_NAME'].'/sitemarchand/public/');
 
 ini_set('arg_separator.output','&amp;');
 ini_set('session.cookie_lifetime',0);

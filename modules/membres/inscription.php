@@ -2,7 +2,7 @@
 defined('ALLOWED') or die();
 if(Membre::connecte())
 {
-	redirect('http://'.SITE.'/?rubrique=membres&action=mon-compte');
+	redirect(SITE.'/?rubrique=membres&action=mon-compte');
 	die();
 }
 $pseudo_original = (empty($_POST['pseudo']) ? '' : protegerAffichage($_POST['pseudo']));
@@ -30,7 +30,7 @@ if(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 					//TODO: Utiliser une meilleure regex (RFC 2822) ou filter mais vérifier si aucune faille...
 					if(Membre::ajouterMembre($_POST['prenom'],$_POST['nom'],$_POST['pseudo'],$_POST['password'],$_POST['ville'],$_POST['codePostal'],$_POST['mail'],$_POST['adressePostale']))
 					{
-						redirect('http://'.SITE.'/?rubrique=membres&action=connexion&from=inscription');
+						redirect(SITE.'/?rubrique=membres&action=connexion&from=inscription');
 					}
 					else
 						$messages->ajouterErreur('Inscription impossible pour le moment.');
