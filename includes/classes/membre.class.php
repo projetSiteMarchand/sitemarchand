@@ -51,35 +51,6 @@ class Membre
 		$this->adressePostale  = $adressePostale;
 	}
 
-	private function unserializeSession($data)
-	{
-    		if(strlen($data) == 0)
-    		{
-        		return array();
-    		}
-    		// match all the session keys and offsets
-    		preg_match_all('/(^|;|\})([a-zA-Z0-9_]+)\|/i', $data, $matchesarray, PREG_OFFSET_CAPTURE);
-    		$returnArray = array();
-    		$lastOffset = null;
-    		$currentKey = '';
-    		foreach($matchesarray[2] as $value )
-    		{
-        		$offset = $value[1];
-        		if(!is_null( $lastOffset))
-        		{
-            			$valueText = substr($data, $lastOffset, $offset - $lastOffset );
-            			$returnArray[$currentKey] = unserialize($valueText);
-        		}
-        		$currentKey = $value[0];
-
-        		$lastOffset = $offset + strlen( $currentKey )+1;
-    		}
-
-    		$valueText = substr($data, $lastOffset );
-    		$returnArray[$currentKey] = unserialize($valueText);
-
-    		return $returnArray;
-	}
 
 	/**
 		* @brief Déconnecte le membre
@@ -237,6 +208,36 @@ class Membre
 		}
 	}
 
+	private static function unserializeSession($data)
+	{
+    		if(strlen($data) == 0)
+    		{
+        		return array();
+    		}
+    		// match all the session keys and offsets
+    		preg_match_all('/(^|;|\})([a-zA-Z0-9_]+)\|/i', $data, $matchesarray, PREG_OFFSET_CAPTURE);
+    		$returnArray = array();
+    		$lastOffset = null;
+    		$currentKey = '';
+    		foreach($matchesarray[2] as $value )
+    		{
+        		$offset = $value[1];
+        		if(!is_null( $lastOffset))
+        		{
+            			$valueText = substr($data, $lastOffset, $offset - $lastOffset );
+            			$returnArray[$currentKey] = unserialize($valueText);
+        		}
+        		$currentKey = $value[0];
+
+        		$lastOffset = $offset + strlen( $currentKey )+1;
+    		}
+
+    		$valueText = substr($data, $lastOffset );
+    		$returnArray[$currentKey] = unserialize($valueText);
+
+    		return $returnArray;
+	}
+
 	/**
 		* @brief Déconnecte un membre
 		*
@@ -257,7 +258,7 @@ class Membre
 				{
 					if(preg_match('`^sess_*`',$filename))
 					{
-						$data = unserializeSession(file_get_contents($sessionPath.'/'.$filename));
+						$data = self::unserializeSession(file_get_contents($sessionPath.'/'.$filename));
 						if(array_key_exists('id',$data))
 						{
 							if($data['id'] == $this->id)

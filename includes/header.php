@@ -34,7 +34,7 @@ else
 					<a href="?rubrique=site&action=apropos" title="À propos">À propos</a>
 				</li>
 			</ul>
-			<a class="brand" href="<?php echo SITE;?>">Vente Social</a>
+			<a class="brand" href="<?php echo 'http://'.SITE;?>">Vente Social</a>
 			</div>
 		</nav>
 		<div class="container">
