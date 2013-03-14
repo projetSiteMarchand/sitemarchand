@@ -7,11 +7,6 @@ if($membre = Membre::connecte())
 }
 elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 {
-	if(isset($_GET['from']) && $_GET['from'] == 'inscription')
-	{
-		$messages->ajouterInformation('L\'inscription s\'est déroulée avec succès.');
-		$messages->ajouterInformation('Vous pouvez désormais vous connecter.');
-	}
 	if(empty($_POST['captcha']) || empty($_POST['pseudo']) || empty($_POST['password']))
 	{
 		$messages->ajouterErreur('Veuillez remplir tous les champs');
@@ -35,6 +30,11 @@ elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 			$messages->ajouterErreur('Le captcha n\'est pas bon.');
 		}
 	}
+}
+else if(isset($_GET['from']) && $_GET['from'] == 'inscription')
+{
+	$messages->ajouterInformation('L\'inscription s\'est déroulée avec succès.');
+	$messages->ajouterInformation('Vous pouvez désormais vous connecter.');
 }
 $titre = 'Connexion';
 include HEADER;

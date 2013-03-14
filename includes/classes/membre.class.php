@@ -4,6 +4,24 @@ class Membre
 	public static $maxPseudo = 20;
 	public static $minPseudo = 3;
 
+	public static $maxPrenom = 30;
+	public static $minPrenom = 3;
+
+	public static $maxNom = 30;
+	public static $minNom = 3;
+
+	public static $maxVille = 40;
+	public static $minVille = 1;
+
+	public static $maxAdressePostale = 40;
+	public static $minAdressePostale = 3;
+
+	public static $maxCodePostal = 6;
+	public static $minCodePostal = 5;
+
+	public static $maxMail = 40;
+	public static $minMail = 5;
+
 	private static $nomTable = 'MEMBRE';
 	private $id;
 	private $prenom;
@@ -359,7 +377,7 @@ class Membre
 		$validation_hash = md5(self::generateSalt());
 		$hashPassword = self::hashPassword($password,$sel);
 		$pdo = PDO2::getInstance();
-		$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (validation_hash,pseudo,mdp,sel,mail, nom, prenom, statut,ville,codePostal,adressePostale,dateInscription,dateDerniereConnexion) VALUES(:validation_hash,:pseudo,:hashPassword,:sel,:mail, :nom,:prenom,:statut,:ville,:codePostal,:adressePostale,:dateInscription,:dateDerniereConnexion)');
+		$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (validation_hash,pseudo,password,sel,mail, nom, prenom, statut,ville,codePostal,adressePostale,dateInscription,dateDerniereConnexion) VALUES(:validation_hash,:pseudo,:hashPassword,:sel,:mail, :nom,:prenom,:statut,:ville,:codePostal,:adressePostale,:dateInscription,:dateDerniereConnexion)');
 		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
 		$requete->bindValue(':hashPassword',$hashPassword,PDO::PARAM_STR);
 		$requete->bindValue(':sel',$sel,PDO::PARAM_STR);
@@ -610,7 +628,7 @@ class Membre
 		*
 		* @return TRUE si le pseudo n'est pas utilisé, FALSE sinon
 	 */
-	public static function checkPseudo($username)
+	public static function checkPseudo($pseudo)
 	{
 		$pdo = PDO2::getInstance();
 		$requete = $pdo->prepare('SELECT COUNT(*) FROM '.self::$nomTable.' WHERE pseudo=:pseudo');

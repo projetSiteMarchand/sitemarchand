@@ -4,7 +4,7 @@ create database sitemarchand;
 drop table if exists sitemarchand.MEMBRE;
 create table sitemarchand.MEMBRE
 (
-	id int NOT NULL,
+	id int AUTO_INCREMENT NOT NULL,
 	prenom varchar(30) NOT NULL,
 	nom varchar(30) NOT NULL,
 	statut varchar(20) NOT NULL DEFAULT 'membre',
