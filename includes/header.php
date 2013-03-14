@@ -6,12 +6,14 @@ $_SESSION['token'] = hash('crc32',mt_rand());
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 		<title><?php echo empty($titre) ? '' : $titre.' - '; echo TITRE_SITE;?></title>
-		<link rel="stylesheet" type="text/css" href="/css/default.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css"/>
 		<link rel="start" title="Accueil" href="/"/>
-		<link rel="icon" type="image/png" href="/favicon.png"/>
+		<link rel="icon" type="image/png" href="favicon.png"/>
 		<meta name="keywords" content="<?php echo empty($keywords) ? '' : $keywords;?>"/>
 		<meta name="description" content="<?php echo empty($description) ? '' : $description;?>"/>
 		<meta name="robots" content="index,follow"/>
+		<script src="js/bootstrap.min.js" type="application/javascript"></script>
 	</head>
 	<body>
 		<header>
