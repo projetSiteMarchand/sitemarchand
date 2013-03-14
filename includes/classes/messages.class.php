@@ -4,10 +4,12 @@ class Messages
 	private static $instance;
 	private $erreurs = 0;
 	private $informations = 0;
+	private $succes = 0;
 	private $erreursPHP = 0;
 	private $erreursSQL = 0;
 	private $listeErreurs = array();
 	private $listeInformations = array();
+	private $listeSucces = array();
 	private $listeErreursPHP = array();
 	private $listeErreursSQL = array();
 	public function __construct(){}
@@ -15,6 +17,11 @@ class Messages
 	{
 		$this->listeErreurs[$this->erreurs]['message'] = $message;
 		$this->erreurs++;
+	}
+	public function ajouterSucces($message)
+	{
+		$this->listeSucces[$this->succes]['message'] = $message;
+		$this->succes++;
 	}
 	public function ajouterInformation($message)
 	{
@@ -53,24 +60,31 @@ class Messages
 		if($this->erreursSQL > 0)
 		{
 			foreach($this->listeErreursSQL as $e)
-				echo '<p class="error"><strong>SQLSTATE['.$e['codeSqlstate'].']</strong> : '.$e['message'].'. ('.$e['codeDriver'].')</p>';
+				echo '<div class="alert alert-error"><p><strong>Erreur SQL</strong><br /><strong>SQLSTATE['.$e['codeSqlstate'].']</strong> : '.$e['message'].'. ('.$e['codeDriver'].')</p></div>';
 		}
 	}
 	public function afficherMessages()
 	{
 		if($this->erreurs > 0)
 		{
-			echo '<ul id="erreurs">';
+			echo '<div id="erreurs" class="alert alert-error"><h4>Erreur</h4><ul>';
 			foreach($this->listeErreurs as $erreur)
 				echo '<li>'.$erreur['message'].'</li>';
-			echo '</ul>';
+			echo '</ul></div>';
+		}
+		if($this->succes > 0)
+		{
+			echo '<div id="succes" class="alert alert-success"><h4>Succès</h4><ul>';
+			foreach($this->listeSucces as $succes)
+				echo '<li>'.$succes['message'].'</li>';
+			echo '</ul></div>';
 		}
 		if($this->informations > 0)
 		{
-			echo '<ul id="informations">';
+			echo '<div id="informations" class="alert alert-info"><h4>Information</h4><ul>';
 			foreach($this->listeInformations as $information)
 				echo '<li>'.$information['message'].'</li>';
-			echo '</ul>';
+			echo '</ul></div>';
 		}
 	}
 	public function afficherErreursPHP()
@@ -80,9 +94,9 @@ class Messages
 			foreach($this->listeErreursPHP as $e)
 			{
 				if(preg_match('`NOTICE$|DEPRECATED$`i',$e['type']))
-					echo '<p class="notice"><strong>'.$e['type'].'</strong> : '.$e['message'].' in '.$e['fichier'].' on line '.$e['ligne'].'</p>';
+					echo '<div class="alert alert-info"><p><strong>'.$e['type'].'</strong> : '.$e['message'].' in '.$e['fichier'].' on line '.$e['ligne'].'</p></div>';
 				else
-					echo '<p class="error"><strong>'.$e['type'].'</strong> : '.$e['message'].' in '.$e['fichier'].' on line '.$e['ligne'].'</p>';
+					echo '<div class="alert alert-error"><p><strong>'.$e['type'].'</strong> : '.$e['message'].' in '.$e['fichier'].' on line '.$e['ligne'].'</p></div>';
 			}
 		}
 	}
@@ -104,7 +118,7 @@ class Messages
 	{
 		if(!isset(self::$instance))
 			self::$instance = new Messages();
-		return self::$instance;
+		return self::$instance; 
 	}
 }
 ?>
