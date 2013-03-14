@@ -1,6 +1,6 @@
 <?php
 define('ALLOWED',1);
-define('BASE',getcwd());
+define('BASE',getcwd().'/../');
 require_once BASE.'includes/configuration.php';
 if(MAINTENANCE)
 {

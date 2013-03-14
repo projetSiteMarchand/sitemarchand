@@ -30,21 +30,6 @@ class Membre
 		$this->adressePostale  = $adressePostale;
 	}
 
-	public function __construct($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale)
-	{
-		$this->id  = $id;
-		$this->prenom  = $prenom;
-		$this->nom  = $nom;
-		$this->statut  = $statut;
-		$this->pseudo  = $pseudo;
-		$this->ville  = $ville;
-		$this->codePostal  = $codePostal;
-		$this->mail  = $mail;
-		$this->dateInscription  = $dateInscription;
-		$this->dateDerniereConnexion = $dateDerniereConnexion;
-		$this->adressePostale  = $adressePostale;
-	}
-
 	private function unserializeSession($data)
 	{
     		if(strlen($data) == 0)
@@ -325,7 +310,7 @@ class Membre
 		{
 			$id = $pdo->lastInsertId();
 			$requete->closeCursor();
-			return new Membre($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale);
+			return new Membre(array($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale));
 		}
 		else
 		{
