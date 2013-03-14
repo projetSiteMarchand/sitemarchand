@@ -15,7 +15,12 @@ $_SESSION['token'] = hash('crc32',mt_rand());
 	</head>
 	<body>
 		<header>
-
+<?php
+if($membre = Membre::connecte())
+{
+	echo '<p>'.protegerAffichage($membre->getPseudo()).'</p>';
+}
+?>
 		</header>
 <!-- Menu à placer ici -->
 <?php

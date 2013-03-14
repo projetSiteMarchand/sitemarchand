@@ -84,6 +84,16 @@ class Membre
 	}
 
 	/**
+		* @brief Récupère le pseudo du membre
+		*
+		* @return Le pseudo du membre
+	 */
+	public function getPseudo()
+	{
+		return $this->pseudo;
+	}
+
+	/**
 		* @brief Récupère l'ensemble des informations concernant le membre excepté son mot de passe
 		*
 		* @return Un tableau associatif des informations du membre
@@ -586,6 +596,33 @@ class Membre
 		{
 			return FALSE;
 		}
+	}
+
+	/**
+		* @brief Vérifie si un pseudo est déjà utilisé
+		*
+		* @param $pseudo pseudo à vérifier
+		*
+		* @return TRUE si le pseudo n'est pas utilisé, FALSE sinon
+	 */
+	public static function checkPseudo($username)
+	{
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('SELECT COUNT(*) FROM '.self::$nomTable.' WHERE pseudo=:pseudo');
+		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
+		if(!$requete->execute())
+		{
+			$messages = Messages::getInstance();
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+		$nb = $requete->fetchColumn();
+		$requete->closeCursor();
+		if($nb > 0)
+			return FALSE;
+		else
+			return TRUE;
 	}
 }
 ?>
