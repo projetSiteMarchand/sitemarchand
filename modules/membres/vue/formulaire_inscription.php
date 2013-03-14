@@ -44,19 +44,19 @@ include HEADER;
 	<div class="control-group">
 		<label class="control-label" for="mail">E-mail</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minMail;?>" max="<?php echo Membre::$maxMail;?>" required="required" id="mail" name="mail" value="<?php echo $mail_original;?>" placeholder="E-mail"/><br />
+			<input type="email" min="<?php echo Membre::$minMail;?>" max="<?php echo Membre::$maxMail;?>" required="required" id="mail" name="mail" value="<?php echo $mail_original;?>" placeholder="E-mail"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="password">Mot de passe</label>
 		<div class="controls">
-			<input type="text" required="required" id="password" name="password" placeholder="Mot de passe"/><br />
+			<input type="password" required="required" id="password" name="password" placeholder="Mot de passe"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="password2">Retapez le mot de passe</label>
 		<div class="controls">
-			<input type="text" required="required" id="password2" name="password2" placeholder="Retapez le mot de passe"/><br />
+			<input type="password" required="required" id="password2" name="password2" placeholder="Retapez le mot de passe"/><br />
 		</div>
 	</div>
 	<div class="control-group">
