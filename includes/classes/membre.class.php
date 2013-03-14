@@ -63,38 +63,14 @@ class Membre
 	/**
 		* @brief Déconnecte le membre
 		*
-		* @return TRUE si la déconnexion a réussi, FALSE sinon
 	 */
 	public function deconnecter()
 	{
-		$sessionPath = session_save_path();
-		$sessionPath = (empty($sessionPath) ? '/tmp/' : $sessionPath);
-		if(is_dir($sessionPath))
-		{
-			if($dh = opendir($sessionPath))
-			{
-				while (($filename = readdir($dh)) !== false)
-				{
-					if(preg_match('`^sess_*`',$filename))
-					{
-						$data = unserializeSession(file_get_contents($sessionPath.'/'.$filename));
-						if(array_key_exists('id',$data))
-						{
-							if($data['id'] == $this->id)
-							{
-								if(unlink($sessionPath.'/'.$filename))
-								{
-									closedir($dh);
-									return TRUE;
-								}
-							}
-						}
-					}
-				}
-				closedir($dh);
-			}
-		}
-		return FALSE;
+		session_unset();
+		session_destroy();
+		session_write_close();
+		setcookie(session_name(),'',1);
+		session_regenerate_id(true);
 	}
 
 	/**
@@ -230,6 +206,82 @@ class Membre
 		}
 	}
 
+	/**
+		* @brief Déconnecte un membre
+		*
+		* @param $membre Membre à déconnecter
+		*
+		* @return  TRUE si la déconnexion a réussie, FALSE sinon
+	 */
+	public static function deconnecterMembre($membre)
+	{
+		$id = $membre->id;
+		$sessionPath = session_save_path();
+		$sessionPath = (empty($sessionPath) ? '/tmp/' : $sessionPath);
+		if(is_dir($sessionPath))
+		{
+			if($dh = opendir($sessionPath))
+			{
+				while (($filename = readdir($dh)) !== false)
+				{
+					if(preg_match('`^sess_*`',$filename))
+					{
+						$data = unserializeSession(file_get_contents($sessionPath.'/'.$filename));
+						if(array_key_exists('id',$data))
+						{
+							if($data['id'] == $this->id)
+							{
+								if(unlink($sessionPath.'/'.$filename))
+								{
+									closedir($dh);
+									return TRUE;
+								}
+							}
+						}
+					}
+				}
+				closedir($dh);
+			}
+		}
+		session_unset();
+		session_destroy();
+		session_write_close();
+		setcookie(session_name(),'',1);
+		session_regenerate_id(true);
+		return FALSE;
+	}
+
+	/**
+		* @brief Déconnecte et supprime un membre de la base de données
+		*
+		* @param $membre
+		*
+		* @return TRUE si la suppression a réussi, FALSE sinon
+	 */
+	public static function supprimerMembre($membre)
+	{
+		$id = $membre->id;
+		$messages = Messages::getInstance();
+		if(self::deconnecterMembre())
+			$messages->ajouterInformation('Le membre a été déconnecté.');
+		else
+			$messages->ajouterErreur('Le membre n\'a pas été déconnecté.');
+
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+	}
 	/**
 		* @brief Génère de manière pseudo-aléatoire un sel pour l'algorithme blowfish
 		*
