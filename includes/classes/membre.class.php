@@ -4,7 +4,7 @@ class Membre
 	public static $maxPseudo = 20;
 	public static $minPseudo = 3;
 
-	private static $nomTable = 'membres';
+	private static $nomTable = 'MEMBRE';
 	private $id;
 	private $prenom;
 	private $nom;
@@ -302,16 +302,18 @@ class Membre
 	 */
 	public static function generateSalt($log = 13)
 	{
-		$output = ''; 
-		if(is_readable('/dev/urandom') && ($fopen = fopen('/dev/urandom', 'rb')))
-		{
-			$output = fread($fopen, 32);
-			fclose($fopen);
-		}
-		else
-		{
+		/*
+		 *$output = ''; 
+		 *if(is_readable('/dev/urandom') && ($fopen = fopen('/dev/urandom', 'rb')))
+		 *{
+		 *        $output = fread($fopen, 32);
+		 *        fclose($fopen);
+		 *}
+		 *else
+		 *{
+		 */
 			$output = hash('md5',uniqid('',TRUE));
-		}
+		//}
 
 		//Pour blowfish le salt doit faire 22 charsa
 		//On met le log utilisé dans le salt pour pouvoir le récupérer et éviter de stocker un nouveau champ, et éviter que le boulet sache qu'on utilise du blowfish avec le nom de ce nouveau champ
@@ -437,7 +439,7 @@ class Membre
 				FROM '.self::$nomTable.'
 				WHERE pseudo=:pseudo AND password=:password');
 			$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
-			$requete->bindValue(':password',hashPassword($password,$sel),PDO::PARAM_STR);
+			$requete->bindValue(':password',self::hashPassword($password,$sel),PDO::PARAM_STR);
 			if(!$requete->execute())
 			{
 				$messages = Messages::getInstance();
@@ -476,7 +478,7 @@ class Membre
 		}
 		else
 		{
-			hashPassword('canardEnPlastique',generateSalt());//Pour éviter les timing attacks
+			self::hashPassword('canardEnPlastique',self::generateSalt());//Pour éviter les timing attacks
 			$messages->ajouterErreur('Le nom d\'utilisateur et/ou le mot de passe sont incorrects ou inexistants, veuillez réessayer.');
 			return FALSE;
 		}
