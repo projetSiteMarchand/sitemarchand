@@ -93,17 +93,17 @@ class Membre
 	public function getInformations()
 	{
 		return array(
-			'id' => $this->id,
-			'nom' => $this->nom,
-			'prenom' => $this->prenom,
-			'statut' => $this->statut,
-			'pseudo' => $this->pseudo,
-			'ville' => $this->ville,
-			'codePostal' => $this->codePostal,
-			'mail' => $this->mail,
-			'dateInscription' => $this->dateInscription,
-			'dateDerniereConnexion' => $this->dateDerniereConnexion,
-			'adressePostale' => $this->adressePostale
+			$this->id,
+			$this->nom,
+			$this->prenom,
+			$this->statut,
+			$this->pseudo,
+			$this->ville,
+			$this->codePostal,
+			$this->mail,
+			$this->dateInscription,
+			$this->dateDerniereConnexion,
+			$this->adressePostale
 			);
 	}
 
@@ -396,6 +396,7 @@ class Membre
 		{
 			$id = $pdo->lastInsertId();
 			$requete->closeCursor();
+			mail($mail, TITRE_SITE.' - Inscription', 'Wesh cousin va sur ce lien : '.SITE.'/?rubrique=membres&action=validation-inscription&hash='.$validation_hash);
 			return new Membre(array($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale));
 		}
 		else

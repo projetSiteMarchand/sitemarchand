@@ -1,7 +1,3 @@
-<?php 
-$titre = 'Inscription';
-include HEADER;
-?>
 <h1>Inscription</h1>
 <form action="?rubrique=membres&action=inscription" method="post" class="form-horizontal">
 	<input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>"/>
@@ -73,4 +69,3 @@ include HEADER;
 		</div>
 	</div>
 </form>
-<?php include FOOTER;?>

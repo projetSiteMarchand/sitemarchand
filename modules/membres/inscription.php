@@ -46,10 +46,9 @@ if(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 		else
 			$messages->ajouterErreur('Les mots de passe ne correspondent pas.');
 	}
-	include VUE.'formulaire_inscription.php';
 }
-else
-{
-	include VUE.'formulaire_inscription.php';
-}
+$titre = 'Inscription';
+include HEADER;
+include VUE.'formulaire_inscription.php';
+include FOOTER;
 ?>

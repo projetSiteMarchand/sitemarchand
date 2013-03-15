@@ -33,10 +33,17 @@ elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 		}
 	}
 }
-else if(isset($_GET['from']) && $_GET['from'] == 'inscription')
+else if(isset($_GET['from']))
 {
-	$messages->ajouterInformation('L\'inscription s\'est déroulée avec succès.');
-	$messages->ajouterInformation('Vous pouvez désormais vous connecter.');
+	if($_GET['from'] == 'inscription')
+	{
+		$messages->ajouterInformation('L\'inscription s\'est déroulée avec succès.');
+		$messages->ajouterInformation('Vous pouvez désormais vous connecter.');
+	}
+	else if($_GET['from'] == 'validation')
+	{
+		$messages->ajouterInformation('Validation réussie. Vous pouvez désormais vous connecter.');
+	}
 }
 $titre = 'Connexion';
 include HEADER;
