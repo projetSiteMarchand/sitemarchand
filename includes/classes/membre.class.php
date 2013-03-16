@@ -23,6 +23,7 @@ class Membre
 	public static $minMail = 5;
 
 	private static $nomTable = 'MEMBRE';
+	private static $avatarsFolder = 'img/avatars/';
 	private $id;
 	private $prenom;
 	private $nom;
@@ -93,6 +94,16 @@ class Membre
 	public function estAdmin()
 	{
 		return !empty($this->statut) && $this->statut == 'admin';
+	}
+
+	public function getAvatarPath()
+	{
+		$avatar_path = self::$avatarsFolder.$this->id.'.png';
+		if(!file_exists(BASE.'public/'.$avatar_path))
+		{
+			$avatar_path = self::$avatarsFolder.'noavatar.png';
+		}
+		return $avatar_path;
 	}
 
 	/**

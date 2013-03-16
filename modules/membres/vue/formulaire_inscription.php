@@ -4,43 +4,43 @@
 	<div class="control-group">
 		<label class="control-label" for="pseudo">Pseudo</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minPseudo;?>" max="<?php echo Membre::$maxPseudo;?>" required="required" id="pseudo" name="pseudo" value="<?php echo $pseudo_original;?>" placeholder="Pseudo"/><br />
+			<input type="text" maxlength="<?php echo Membre::$maxPseudo;?>" required="required" id="pseudo" name="pseudo" value="<?php echo $pseudo_original;?>" placeholder="Pseudo"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="prenom">Prénom</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minPrenom;?>" max="<?php echo Membre::$maxPrenom;?>" required="required" id="prenom" name="prenom" value="<?php echo $prenom_original;?>" placeholder="Prénom"/><br />
+			<input type="text" maxlength="<?php echo Membre::$maxPrenom;?>" required="required" id="prenom" name="prenom" value="<?php echo $prenom_original;?>" placeholder="Prénom"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="nom">Nom</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minNom;?>" max="<?php echo Membre::$maxNom;?>" required="required" id="nom" name="nom" value="<?php echo $nom_original;?>" placeholder="Nom"/><br />
+			<input type="text" maxlength="<?php echo Membre::$maxNom;?>" required="required" id="nom" name="nom" value="<?php echo $nom_original;?>" placeholder="Nom"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="adressePostal">Adresse</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minAdressePostale;?>" max="<?php echo Membre::$maxAdressePostale;?>" required="required" id="adressePostale" name="adressePostale" value="<?php echo $adressePostale_original;?>" placeholder="Adresse postale"/><br />
+			<input type="text" maxlength="<?php echo Membre::$maxAdressePostale;?>" required="required" id="adressePostale" name="adressePostale" value="<?php echo $adressePostale_original;?>" placeholder="Adresse postale"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="ville">Ville</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minVille;?>" max="<?php echo Membre::$maxVille;?>" required="required" id="ville" name="ville" value="<?php echo $ville_original;?>" placeholder="Ville"/><br />
+			<input type="text" maxlength="<?php echo Membre::$maxVille;?>" required="required" id="ville" name="ville" value="<?php echo $ville_original;?>" placeholder="Ville"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="codePostal">Code Postal</label>
 		<div class="controls">
-			<input type="text" min="<?php echo Membre::$minCodePostal;?>" max="<?php echo Membre::$maxCodePostal;?>" required="required" id="codePostal" name="codePostal" value="<?php echo $codePostal_original;?>" placeholder="Code postal"/><br />
+			<input type="text" pattern=".{<?php echo Membre::$minCodePostal;?>,<?php echo Membre::$maxCodePostal;?>}" required="required" id="codePostal" name="codePostal" value="<?php echo $codePostal_original;?>" placeholder="Code postal"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="mail">E-mail</label>
 		<div class="controls">
-			<input type="email" min="<?php echo Membre::$minMail;?>" max="<?php echo Membre::$maxMail;?>" required="required" id="mail" name="mail" value="<?php echo $mail_original;?>" placeholder="E-mail"/><br />
+			<input type="email" maxlength="<?php echo Membre::$maxMail;?>" required="required" id="mail" name="mail" value="<?php echo $mail_original;?>" placeholder="E-mail"/><br />
 		</div>
 	</div>
 	<div class="control-group">

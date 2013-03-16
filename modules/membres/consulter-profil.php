@@ -15,11 +15,7 @@ else
 }
 list($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale) = protegerAffichage($membre->getInformations());
 $titre = 'Profil du membre : '.$pseudo;
-$avatar_path = $pseudo.'.png';
-if(!file_exists($avatar_path))
-{
-	$avatar_path = 'noavatar.png';
-}
+$avatar_path = $membre->getAvatarPath();
 include HEADER;
 include VUE.'consulter-profil.php';
 include FOOTER;
