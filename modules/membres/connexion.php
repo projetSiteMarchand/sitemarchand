@@ -32,7 +32,7 @@ else if(isset($_GET['from']))
 	if($_GET['from'] == 'inscription')
 	{
 		$messages->ajouterInformation('L\'inscription s\'est déroulée avec succès.');
-		$messages->ajouterInformation('Vous pouvez désormais vous connecter.');
+		$messages->ajouterInformation('Veuillez valider votre inscription avec le lien envoyer à l\'adresse e-mail fournie.');
 	}
 	else if($_GET['from'] == 'validation')
 	{

@@ -24,6 +24,7 @@ class Membre
 
 	private static $nomTable = 'MEMBRE';
 	private static $avatarsFolder = 'img/avatars/';
+
 	private $id;
 	private $prenom;
 	private $nom;
@@ -135,12 +136,10 @@ class Membre
 	 */
 	public function supprimer()
 	{
+		$this->deconnecter();
+
 		$id = $this->id;
 		$messages = Messages::getInstance();
-		if($this->deconnecter())
-			$messages->ajouterInformation('Le membre a été déconnecté.');
-		else
-			$messages->ajouterErreur('Le membre n\'a pas été déconnecté.');
 
 		$pdo = PDO2::getInstance();
 		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');
@@ -285,6 +284,7 @@ class Membre
             			$returnArray[$currentKey] = unserialize($valueText);
         		}
         		$currentKey = $value[0];
+			echo $currentKey;
 
         		$lastOffset = $offset + strlen( $currentKey )+1;
     		}
@@ -304,7 +304,6 @@ class Membre
 	 */
 	public static function deconnecterMembre($membre)
 	{
-		$id = $membre->id;
 		$sessionPath = session_save_path();
 		$sessionPath = (empty($sessionPath) ? '/tmp/' : $sessionPath);
 		if(is_dir($sessionPath))
@@ -316,9 +315,9 @@ class Membre
 					if(preg_match('`^sess_*`',$filename))
 					{
 						$data = self::unserializeSession(file_get_contents($sessionPath.'/'.$filename));
-						if(array_key_exists('id',$data))
+						if(array_key_exists('membre',$data))
 						{
-							if($data['id'] == $this->id)
+							if($data['membre']->getId() == $membre->getId())
 							{
 								if(unlink($sessionPath.'/'.$filename))
 								{
@@ -332,11 +331,6 @@ class Membre
 				closedir($dh);
 			}
 		}
-		session_unset();
-		session_destroy();
-		session_write_close();
-		setcookie(session_name(),'',1);
-		session_regenerate_id(true);
 		return FALSE;
 	}
 
@@ -349,12 +343,9 @@ class Membre
 	 */
 	public static function supprimerMembre($membre)
 	{
+		self::deconnecterMembre($membre);
 		$id = $membre->id;
 		$messages = Messages::getInstance();
-		if(self::deconnecterMembre())
-			$messages->ajouterInformation('Le membre a été déconnecté.');
-		else
-			$messages->ajouterErreur('Le membre n\'a pas été déconnecté.');
 
 		$pdo = PDO2::getInstance();
 		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');

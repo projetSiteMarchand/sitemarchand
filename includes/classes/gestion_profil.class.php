@@ -8,6 +8,11 @@ class GestionProfil
 		$this->membre = $membre;
 	}
 
+	public function supprimerProfil()
+	{
+		Membre::supprimerMembre($this->membre);
+	}
+
 	public function modifierProfil($post)
 	{
 		$codePostal = empty($post['codePostal']) ? '' : $post['codePostal'];

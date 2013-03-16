@@ -10,6 +10,10 @@ if(isset($_GET['from']))
 	{
 		$messages->ajouterInformation('Vous êtes désormais déconnécté.');
 	}
+	else if($_GET['from'] == 'supprimer-profil')
+	{
+		$messages->ajouterInformation('Vous êtes désormais déconnécté.');
+	}
 }
 $titre = 'Accueil';
 include HEADER;
