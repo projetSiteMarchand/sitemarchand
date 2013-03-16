@@ -1,9 +1,6 @@
 <h1><?php echo $titre;?></h1>
 <img src="<?php echo $avatar_path;?>"/>
-<form action="?rubrique=membres&action=modifier-profil" method="post" class="form-horizontal">
-<?php
-	echo !empty($_GET['id']) ? '<input type="hidden" name="id" value="'.protegerAffichage($_GET['id']).'"/>' : '';
-?>
+<form action="?rubrique=membres&action=modifier-profil<?php echo !empty($_GET['id']) ? '&id='.protegerAffichage($_GET['id']) : '';?>" method="post" class="form-horizontal">
 	<input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>"/>
 	<div class="control-group">
 		<label class="control-label" for="prenom">Prénom</label>
@@ -36,9 +33,9 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="password">Nouveau mot de passe</label>
+		<label class="control-label" for="mail">E-mail</label>
 		<div class="controls">
-			<input type="password" id="password" name="password" placeholder="Nouveau mot de passe"/><br />
+			<input type="email" maxlength="<?php echo Membre::$maxMail;?>" required="required" id="mail" name="mail" value="<?php echo $mail;?>" placeholder="E-mail"/><br />
 		</div>
 	</div>
 	<div class="control-group">

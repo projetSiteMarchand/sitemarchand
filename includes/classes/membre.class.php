@@ -171,13 +171,12 @@ class Membre
 		*
 		* @return TRUE si la mise à jour a fonctionné, FALSE sinon
 	 */
-	public function modifierProfil($prenom, $nom, $pseudo, $ville, $codePostal, $mail, $adressePostale)
+	public function modifierProfil($prenom, $nom, $ville, $codePostal, $mail, $adressePostale)
 	{
 		$id = $this->id;
 		$messages = Messages::getInstance();
 		$pdo = PDO2::getInstance();
-		$requete = $pdo->prepare('UPDATE membres SET pseudo=:pseudo,mail=:mail,prenom=:prenom,nom=:nom,adressePostale=:adressePostale,codePostal=:codePostal,ville=:ville WHERE id=:id');
-		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
+		$requete = $pdo->prepare('UPDATE '.self::$nomTable.' SET mail=:mail,prenom=:prenom,nom=:nom,adressePostale=:adressePostale,codePostal=:codePostal,ville=:ville WHERE id=:id');
 		$requete->bindValue(':mail',$mail,PDO::PARAM_STR);
 		$requete->bindValue(':prenom',$prenom,PDO::PARAM_STR);
 		$requete->bindValue(':nom',$nom,PDO::PARAM_STR);
@@ -228,6 +227,11 @@ class Membre
 			return FALSE;
 		}
 
+	}
+
+	public function miseAJour()
+	{
+		$this->__construct(self::getMembreId($this->id)->getInformations());
 	}
 
 	/**

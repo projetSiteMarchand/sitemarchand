@@ -25,6 +25,7 @@ else
 require_once FONCTIONS.'common.php';
 require_once CLASSES.'pdo.class.php';
 require_once CLASSES.'membre.class.php';
+require_once CLASSES.'gestion_profil.class.php';
 
 if(!headers_sent())
 {
@@ -37,8 +38,8 @@ if(!headers_sent())
 }
 $_GET['action'] = (empty($_GET['action'])) ? 'accueil' : $_GET['action'];
 $_GET['rubrique'] = (empty($_GET['rubrique'])) ? 'site' : $_GET['rubrique'];
-if(!is_array($_GET['action'])
-       	&& !is_array($_GET['rubrique']) 
+if(sansTableau($_GET)
+       	&& sansTableau($_POST)
 	&& preg_match('`^[a-zA-Z0-9-]+$`', $_GET['rubrique'])
        	&& preg_match('`^[a-zA-Z0-9-]+$`', $_GET['action'])
        	&& is_file(MODULES.$_GET['rubrique'].'/'.$_GET['action'].'.php'))

@@ -20,6 +20,11 @@ if($membreActuel = Membre::connecte())
 		include ERREURS.'page-introuvable.php';
 		die();
 	}
+	if(isset($_POST['submit']))
+	{
+		$g = new GestionProfil($membreAModifier);
+		$g->modifierProfil($_POST);
+	}
 	list($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale) = protegerAffichage($membreAModifier->getInformations());
 	if($membreActuel == $membreAModifier)
 	{
