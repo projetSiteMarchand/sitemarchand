@@ -47,12 +47,30 @@ if($membre)
 ?>
 			<div class="span3">
 				<ul class="nav nav-list well">
-					<li class="nav-header">Panier</li>
-					<li class="nav-header">Membre</li>
-					<li><a href="?rubrique=membres&action=deconnexion&token=<?php echo $_SESSION['token'];?>" title="Se déconnecter"><i class="icon-remove"></i> Déconnexion</a></li>
-					<li><a href="?rubrique=membres&action=mon-compte" title="Mon compte"><i class="icon-briefcase"></i> Mon compte</a></li>
-					<li><a href="?rubrique=membres&action=voir-profil" title="Voir mon profil"><i class="icon-eye-open"></i> Voir mon profil</a></li>
+					<li class="nav-header">Achats immédiat</li>
+					<li><a href="?rubrique=produits&action=consulter-panier" title="0 produits dans le panier"><s><i class="icon-shopping-cart"></i> Voir mon panier (0)</a></s></li>
+					<li><a href="?rubrique=produits&action=rechercher-produit" title=""><s><i class="icon-search"></i> Rechercher un produit</a></s></li>
+					<li class="nav-header">Enchères</li>
+					<li><a href="?rubrique=encheres&action=rechercher-objet" title="Rechercher un objet"><s><i class="icon-search"></i> Rechercher un objet</a></s></li>
+					<li><a href="?rubrique=encheres&action=lister-objets-encheris" title="Liste des objets enchéris"><s><i class="icon-list"></i> Liste des objets enchéris</a></s></li>
+					<li><a href="?rubrique=encheres&action=gerer-objets" title="Gérer mes objets"><s><i class="icon-folder-open"></i> Gérer mes objets</a></s></li>
+					<li class="nav-header">Profil</li>
+					<li><a href="?rubrique=membres&action=modifier-profil" title="Modifier mon profil"><s><i class="icon-wrench"></i> Modifier mon profil</a></s></li>
+					<li><a href="?rubrique=membres&action=consulter-profil" title="Voir mon profil"><i class="icon-eye-open"></i> Voir mon profil</a></li>
 					<li class="nav-header">Messagerie</li>
+					<li><a href="?rubrique=messagerie&action=consulter-messagerie" title="0 messages non-lus"><s><i class="icon-envelope"></i> Consulter messagerie (0)</a></s></li>
+					<li><a href="?rubrique=messagerie&action=envoyer-message" title="Envoyer un message"><s><i class="icon-pencil"></i> Envoyer un message</a></s></li>
+<?php
+	if($membre->estAdmin())
+	{
+?>
+					<li class="nav-header">Administration</li>
+					<li><a href="?rubrique=membres&action=lister-membres" title="Liste des membres"><s><i class="icon-user"></i> Gestion des membres</a></s></li>
+					<li><a href="?rubrique=produits&action=gerer-produits" title="Catalogue des produits"><s><i class="icon-list-alt"></i> Gestion des produits</a></s></li>
+
+<?php
+	}
+?>
 				</ul>
 			</div>
 <?php

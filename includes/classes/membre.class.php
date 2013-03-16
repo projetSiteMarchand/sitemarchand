@@ -86,6 +86,16 @@ class Membre
 	}
 
 	/**
+		* @brief Vérifie si le membre est admin
+		*
+		* @return TRUE si le membre est admin, FALSE sinon
+	 */
+	public function estAdmin()
+	{
+		return !empty($this->statut) && $this->statut == 'admin';
+	}
+
+	/**
 		* @brief Récupère l'ensemble des informations concernant le membre excepté son mot de passe
 		*
 		* @return Un tableau associatif des informations du membre
