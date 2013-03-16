@@ -199,6 +199,38 @@ class Membre
 	}
 
 	/**
+		* @brief Met à jour la date de dernière connexion du membre à maintenant
+		*
+		* @return TRUE si la màj a fonctionné, FALSE sinon
+	 */
+	private function miseAJourDateConnexion()
+	{
+		$id = $this->id;
+		$messages = Messages::getInstance();
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('UPDATE '.self::$nomTable.' SET dateDerniereConnexion=Now() WHERE id=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			$requete = $pdo->prepare('SELECT dateDerniereConnexion FROM '.self::$nomTable.' WHERE id=:id');
+			$requete->bindValue(':id',$id,PDO::PARAM_INT);
+			$requete->execute();
+			$data = $requete->fetch();
+			$this->dateDerniereConnexion = $data[0];
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+
+	}
+
+	/**
 		* @brief Modifie le mot de passe du membre
 		*
 		* @param $newPassword Nouveau mot de passe en clair
@@ -507,6 +539,7 @@ class Membre
 					$_SESSION['membre'] = new Membre($champs);
 					$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
 					$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+					$_SESSION['membre']->miseAJourDateConnexion();
 					return TRUE;
 				}
 			}
