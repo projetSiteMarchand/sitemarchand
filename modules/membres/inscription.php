@@ -2,7 +2,7 @@
 defined('ALLOWED') or die();
 if(Membre::connecte())
 {
-	redirect(SITE.'/?rubrique=membres&action=mon-compte');
+	redirect(SITE);
 	die();
 }
 $pseudo_original = (empty($_POST['pseudo']) ? '' : protegerAffichage($_POST['pseudo']));

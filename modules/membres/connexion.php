@@ -2,9 +2,7 @@
 defined('ALLOWED') or die();
 if($membre = Membre::connecte())
 {
-	include HEADER;
-	include VUE.'mon-compte.php';
-	include FOOTER;
+	redirect(SITE);
 	die();
 }
 elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
@@ -19,11 +17,7 @@ elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 		{
 			if($membre = Membre::connexion($_POST['pseudo'],$_POST['password']))
 			{
-				$messages->ajouterInformation('Vous êtes désormais connécté.');
-				$titre = 'Mon Compte';
-				include HEADER;
-				include VUE.'mon-compte.php';
-				include FOOTER;
+				redirect(SITE.'?from=connexion');
 				die();
 			}
 		}
