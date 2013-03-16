@@ -41,10 +41,6 @@ else
 		</nav>
 		<div class="container">
 		<div class="row">
-<?php
-if($membre)
-{
-?>
 			<div class="span3">
 				<ul class="nav nav-list well">
 					<li class="nav-header">Achats immédiat</li>
@@ -52,6 +48,10 @@ if($membre)
 					<li><a href="?rubrique=produits&action=rechercher-produit" title=""><s><i class="icon-search"></i> Rechercher un produit</a></s></li>
 					<li class="nav-header">Enchères</li>
 					<li><a href="?rubrique=encheres&action=rechercher-objet" title="Rechercher un objet"><s><i class="icon-search"></i> Rechercher un objet</a></s></li>
+<?php
+if($membre)
+{
+?>
 					<li><a href="?rubrique=encheres&action=lister-objets-encheris" title="Liste des objets enchéris"><s><i class="icon-list"></i> Liste des objets enchéris</a></s></li>
 					<li><a href="?rubrique=encheres&action=gerer-objets" title="Gérer mes objets"><s><i class="icon-folder-open"></i> Gérer mes objets</a></s></li>
 					<li class="nav-header">Profil</li>
@@ -70,12 +70,10 @@ if($membre)
 
 <?php
 	}
+}
 ?>
 				</ul>
 			</div>
-<?php
-}
-?>
 			<div class="span9">
 <?php
 if(AFFICHER_ERREURS)
