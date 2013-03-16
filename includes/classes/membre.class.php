@@ -115,8 +115,8 @@ class Membre
 	{
 		return array(
 			$this->id,
-			$this->nom,
 			$this->prenom,
+			$this->nom,
 			$this->statut,
 			$this->pseudo,
 			$this->ville,
@@ -647,7 +647,7 @@ class Membre
 		{
 			$requete->closeCursor();
 			$listeMembres = array();
-			foreach($membre as $membres)
+			foreach($membres as $membre)
 			{
 				$listeMembres[] = new Membre($membre);
 			}

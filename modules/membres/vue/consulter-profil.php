@@ -1,5 +1,5 @@
 <h1><?php echo $titre;?></h1>
-<img src="<?php echo $avatar_path;?>"/>
+<img src="<?php echo $avatar_path;?>" class="avatar"/>
 <table class="table">
 	<tr>
 		<td>Nom</td>

@@ -1,5 +1,5 @@
 <h1><?php echo $titre;?></h1>
-<img src="<?php echo $avatar_path;?>"/>
+<img src="<?php echo $avatar_path;?>" class="avatar"/>
 <form action="?rubrique=membres&action=modifier-profil<?php echo !empty($_GET['id']) ? '&id='.protegerAffichage($_GET['id']) : '';?>" method="post" class="form-horizontal">
 	<input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>"/>
 	<div class="control-group">
