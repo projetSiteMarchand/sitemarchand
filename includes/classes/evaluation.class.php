@@ -9,5 +9,15 @@ class Evaluation
     private $membre;
     private $note;
     private $commentaire;
+
+    public function getInformations()
+    {
+        return array(
+            $this->idEvaluation,
+            $this->membre,
+            $this->note,
+            $this->commentaire
+        );
+    }
 }
 ?>
