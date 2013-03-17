@@ -28,8 +28,10 @@ foreach($listeMessages as $message)
 			<td>'.$expediteur.'</td>
 			<td>'.$dateEnvoi.'</td>
 			<td>
-<a href="?rubrique=messagerie&action=supprimer-message&id='.$id.'&token='.$_SESSION['token'].'" title="Supprimer le message"><i class="icon-remove"></i></a>&nbsp;
-<a href="?rubrique=messagerie&action=lire-message&id='.$id.'" title="Lire le message"><i class="icon-eye-open"></i></a>
+	<div class="btn-group">
+<a class="btn btn-small" href="?rubrique=messagerie&action=supprimer-message&id='.$id.'&token='.$_SESSION['token'].'" title="Supprimer le message"><i class="icon-remove"></i></a>&nbsp;
+<a class="btn btn-small" href="?rubrique=messagerie&action=lire-message&id='.$id.'" title="Lire le message"><i class="icon-eye-open"></i></a>
+	</div>
 			</td>
 		</tr>';
 }

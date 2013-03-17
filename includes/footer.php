@@ -1,3 +1,6 @@
+			</div>
+		</div>
+	</div>
 		<footer>
 		</footer>
 <?php

@@ -1,8 +1,10 @@
 <h1><?php echo $titre;?></h1>
-<img src="<?php echo $avatar_path;?>" class="avatar"/>
+<img src="<?php echo $avatar_path;?>" class="avatar img-polaroid"/>
+<br />
+<br />
 <table class="table">
 	<tr>
-		<td>Nom</td>
+		<td style="width:25%">Nom</td>
 		<td><?php echo $nom;?></td>
 	</tr>
 	<tr>
