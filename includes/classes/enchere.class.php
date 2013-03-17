@@ -17,7 +17,7 @@ class Enchere
         $this->idEnchere = $idEnchere;
         $this->montantEnchere = $montantEnchere;
         $this->dateEnchere = $dateEnchere;
-        $this->evaluationVendeur = $evaluationVendeur;
+        $this->evaluationVendeur = $evaluationVendeur;//TODO on verra plus tard pour la gestion des evals tout ça
         $this->evaluationAcheteur = $evaluationAcheteur;
         $this->produitEnchere = ProduitEnchere::getProduitId($produitEnchere);
         $this->encherisseur = Membre::getMembreId($encherisseur);
@@ -95,7 +95,7 @@ class Enchere
 	{
 	    $requete->closeCursor();
 	    $listeEncheres = array();
-	    foreach($encheres as $enchre)
+	    foreach($encheres as $enchere)
 	    {
 		$listeEncheres[] = new Enchere($enchere);
 	    }
