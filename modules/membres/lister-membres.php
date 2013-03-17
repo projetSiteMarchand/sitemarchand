@@ -1,6 +1,5 @@
 <?php
 defined('ALLOWED') or die();
-$membre = Membre::connecte();
 if($membre && $membre->estAdmin())
 {
 	if(isset($_GET['from']))

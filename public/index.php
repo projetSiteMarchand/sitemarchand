@@ -28,6 +28,9 @@ require_once CLASSES.'membre.class.php';
 require_once CLASSES.'message.class.php';
 require_once CLASSES.'gestion_profil.class.php';
 require_once CLASSES.'gestion_messagerie.class.php';
+require_once CLASSES.'produit.class.php';
+require_once CLASSES.'produitCatalogue.class.php';
+require_once CLASSES.'produitEnchere.class.php';
 
 if(!headers_sent())
 {

@@ -15,6 +15,16 @@ class ProduitCatalogue extends Produit
         $this->prixUnitaire = $prixUnit;
     }
 
+    public function getInformations()
+    {
+        return array(
+            $this->id,
+            $this->nomProduit,
+            $this->stock,
+            $this->prixUnitaire
+        );
+    }
+
     public static function getProduitId($id)
     {
 	$pdo = PDO2::getInstance();
