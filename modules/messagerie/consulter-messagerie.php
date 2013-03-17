@@ -20,7 +20,11 @@ if($membre = Membre::connecte())
 	}
 	$titre = 'Ma messagerie';
 	include HEADER;
-	include VUE.'consulter-messagerie.php';
+	include VUE.'messages-recus.php';
+	if(($listeMessages = Message::getMessagesExpediteur($membre)))
+	{
+		include VUE.'messages-envoyes.php';
+	}
 	include FOOTER;
 }
 else

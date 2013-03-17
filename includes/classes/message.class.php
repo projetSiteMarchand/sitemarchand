@@ -68,6 +68,10 @@ class Message
 		}
 	}
 
+	public function getExpediteur()
+	{
+		return $this->expediteur;
+	}
 	public function getDestinataire()
 	{
 		return $this->destinataire;
@@ -238,7 +242,7 @@ class Message
 			WHERE idExpediteur = :idExpediteur
 			ORDER BY dateEnvoi DESC'
 		);
-		$requete->bindValue(':idExpediteur',$membre->id,PDO::PARAM_INT);
+		$requete->bindValue(':idExpediteur',$membre->getId(),PDO::PARAM_INT);
 		if(!$requete->execute())
 		{
 			$messages = Messages::getInstance();

@@ -53,12 +53,19 @@ class GestionMessagerie
 		{
 			return FALSE;
 		}
-		if(!($this->estProprietaireMessage($message)))
+		if(($this->estDestinataireMessage($message)))
+		{
+			$message->messageLu();
+			return $message;
+		}
+		else if(($this->estExpediteurMessage($message)))
+		{
+			return $message;
+		}
+		else
 		{
 			return FALSE;
 		}
-		$message->messageLu();
-		return $message;
 	}
 
 	public function supprimerMessage($id)
@@ -68,7 +75,7 @@ class GestionMessagerie
 		{
 			return FALSE;
 		}
-		if(!($this->estProprietaireMessage($message)))
+		if(!($this->estDestinataireMessage($message)))
 		{
 			return FALSE;
 		}
@@ -83,9 +90,14 @@ class GestionMessagerie
 		*
 		* @return 
 	 */
-	public function estProprietaireMessage($message)
+	public function estDestinataireMessage($message)
 	{
 		return ($message->getDestinataire()->getId() == $this->membre->getId());
+	}
+
+	public function estExpediteurMessage($message)
+	{
+		return ($message->getExpediteur()->getId() == $this->membre->getId());
 	}
 
 	public static function isDestinataireValide($pseudo)

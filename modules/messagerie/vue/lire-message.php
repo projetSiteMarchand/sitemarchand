@@ -6,5 +6,11 @@
 	<p><?php echo $contenu;?></p>
 	<small><?php echo $expediteur;?>, <?php echo lcfirst($dateEnvoi);?></small>
 </blockquote>
+<?php
+if($repondre)
+{
+?>
 	<input type="submit" class="btn " name="submit" value="Répondre"/>
+<?php
+}?>
 </form>

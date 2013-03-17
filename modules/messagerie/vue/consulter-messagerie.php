@@ -1,9 +1,9 @@
-<h1>Ma messagerie</h1>
+<h1>Messages reçus</h1>
 <table class="table table-striped table-bordered table-condensed">
 <thead>
 	<tr>
 		<th width="40%">Sujet</th>
-		<th>De</th>
+		<th>À</th>
 		<th width="25%">Reçu</th>
 		<th width="10%">Action</th>
 	</tr>
