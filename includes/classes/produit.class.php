@@ -1,13 +1,13 @@
 <?php
 class Produit
 {
-    private static $imagesFolder = 'img/produits/';
+    public static $imagesFolder = 'img/produits/';
+    public static $maxNomProduit = 255;
 
 
     private $id;
     private $nomProduit;
     private $descriptifs = array();
-//    private $photo; // vu que c'est géré avec les id des produits
 
     public function getAvatarPath()
     {

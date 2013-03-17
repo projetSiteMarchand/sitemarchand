@@ -8,6 +8,10 @@ if($membre && $membre->estAdmin())
 		{
 			$messages->ajouterInformation('Le produit a été supprimé');
 		}
+		else if($_GET['from'] == 'ajouter-produit')
+		{
+			$messages->ajouterInformation('Le produit a été ajouté');
+		}
 	}
 
 	if(!($produits = ProduitCatalogue::getProduitsCatalogue()))
