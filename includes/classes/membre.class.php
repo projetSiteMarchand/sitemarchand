@@ -53,20 +53,6 @@ class Membre
 		$this->adressePostale  = $adressePostale;
 	}
 
-
-	/**
-	 * @brief Déconnecte le membre
-	 *
-	 */
-	public function deconnecter()
-	{
-		session_unset();
-		session_destroy();
-		session_write_close();
-		setcookie(session_name(),'',1);
-		session_regenerate_id(true);
-	}
-
 	/**
 	 * @brief Récupère l'id du membre
 	 *
@@ -127,38 +113,6 @@ class Membre
 			$this->dateDerniereConnexion,
 			$this->adressePostale
 		);
-	}
-
-	/**
-	 * @brief Déconnecte et supprime le membre de la base de données
-	 *
-	 * @return TRUE si la suppression a réussi, FALSE sinon
-	 */
-	public function supprimer()
-	{
-		$this->deconnecter();
-
-		$id = $this->id;
-		$messages = Messages::getInstance();
-
-		$pdo = PDO2::getInstance();
-		// On supprime tous les messages de ce membre
-		$requete = $pdo->prepare('DELETE FROM '.Message::$nomTable.' WHERE idDestinataire=:id OR idExpediteur=:id');
-		$requete->bindValue(':id',$id,PDO::PARAM_INT);
-		$requete->execute();
-		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');
-		$requete->bindValue(':id',$id,PDO::PARAM_INT);
-		if($requete->execute())
-		{
-			$requete->closeCursor();
-			return TRUE;
-		}
-		else
-		{
-			$messages->ajouterErreurSQL($requete->errorInfo());
-			$requete->closeCursor();
-			return FALSE;
-		}
 	}
 
 	/**

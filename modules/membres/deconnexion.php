@@ -2,7 +2,7 @@
 defined('ALLOWED') or die();
 if($membre && !empty($_GET['token']) && $_GET['token'] == $_SESSION['token'])
 {
-	$membre->deconnecter();
+	GestionConnexions::deconnexion();
 	redirect(SITE.'?from=deconnexion');
 }
 else

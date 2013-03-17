@@ -1,6 +1,15 @@
 <?php
 class GestionConnexions
 {
+	public static function deconnexion()
+	{
+		session_unset();
+		session_destroy();
+		session_write_close();
+		setcookie(session_name(),'',1);
+		session_regenerate_id(true);
+	}
+
 	public static function connexion($pseudo, $password)
 	{
 		if($membre = Membre::checkCredentials($pseudo,$password))
@@ -12,6 +21,7 @@ class GestionConnexions
 		}
 		return FALSE;
 	}
+
 	/**
 	 * @brief Vérifie si le membre est connecté
 	 *
