@@ -23,8 +23,6 @@ create table MEMBRE
 	banned boolean DEFAULT 0, -- 1 => Utilisateur banni, 0 => non banni;
 	primary key(id)
 );
-insert into MEMBRE VALUES(1, 'prenom','nom','admin','admin','AdminTown','31337','admin@admin.com',Now(),Now(),'Admin street','3abb1bcb6f8757ac570cd84d8877d6385ae4c394d21bc1466301bc2f1b759cc4215e75ed708c183538face54dbb3bbc05a59734be48e7bdd357d0ac05901108b','13MzUxMzhmNWY4Zjk0MDIx','',0);
-insert into MEMBRE VALUES(2, 'prenom','nom','membre','membre','membreTown','31337','membre@membre.com',Now(),Now(),'membre street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
 
 -- table MESSAGE
 drop table if exists MESSAGE;
@@ -113,3 +111,14 @@ alter table PRODUIT_ENCHERE add foreign key fk_prode_pro(idProprietaire) REFEREN
 
 alter table COMMENTAIRE add foreign key fk_com_mem(idMembre) REFERENCES MEMBRE(id);
 alter table COMMENTAIRE add foreign key fk_com_prod(idProduit) REFERENCES PRODUIT_CATALOGUE(idProduit);
+
+-- exemples
+insert into MEMBRE VALUES(1, 'prenom','nom','admin','admin','AdminTown','31337','admin@admin.com',Now(),Now(),'Admin street','3abb1bcb6f8757ac570cd84d8877d6385ae4c394d21bc1466301bc2f1b759cc4215e75ed708c183538face54dbb3bbc05a59734be48e7bdd357d0ac05901108b','13MzUxMzhmNWY4Zjk0MDIx','',0);
+insert into MEMBRE VALUES(2, 'prenom','nom','membre','membre','membreTown','31337','membre@membre.com',Now(),Now(),'membre street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
+insert into MEMBRE VALUES(3, 'pauvre','LePauvre','membre','pauvre','pauvreTown','31337','pauvre@membre.com',Now(),Now(),'pauvre street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
+insert into MEMBRE VALUES(4, 'philosophe','LePhilosophe','membre','philosophe','philoTown','31337','philo@membre.com',Now(),Now(),'philo street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
+
+insert into MESSAGE VALUES(1, 1, 2, 'Mahn Mahna', 'The question is, what is a Mahna Mahna ?', Now()-600, 1);
+insert into MESSAGE VALUES(2, 2, 1, 'Re: Mahn Mahna', 'The question is, who cares ?', Now(), 0);
+insert into MESSAGE VALUES(3, 1, 4, 'Les hommes', 'J''ai un profond respect pour le mépris que j''ai des hommes', Now()-300, 0);
+insert into MESSAGE VALUES(4, 1, 3, 'Les pauvres', 'Les pauvres depuis le début de l''humanité ont toujours eu des goûts simples.', Now()-800, 0);
