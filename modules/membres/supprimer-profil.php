@@ -1,12 +1,12 @@
 <?php
 defined('ALLOWED') or die();
-if($membreActuel = Membre::connecte())
+if($membre && !empty($_GET['token']) && $_GET['token'] == $_SESSION['token'])
 {
 	if(empty($_GET['id']))
 	{
-		$membreASupprimer = $membreActuel;
+		$membreASupprimer = $membre;
 	}
-	else if(!empty($_GET['id']) && nombreValide($_GET['id']) && $membreActuel->estAdmin())
+	else if(!empty($_GET['id']) && nombreValide($_GET['id']) && $membre->estAdmin())
 	{
 		$membreASupprimer = Membre::getMembreId($_GET['id']);
 		if(!$membreASupprimer)

@@ -1,6 +1,6 @@
 <?php
 defined('ALLOWED') or die();
-if(Membre::connecte() && empty($_GET['id']))
+if($membre && empty($_GET['id']))
 {
 	$membre = Membre::connecte();
 }

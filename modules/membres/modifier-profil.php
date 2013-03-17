@@ -1,12 +1,12 @@
 <?php
 defined('ALLOWED') or die();
-if($membreActuel = Membre::connecte())
+if($membre)
 {
 	if(empty($_GET['id']))
 	{
-		$membreAModifier = $membreActuel;
+		$membreAModifier = $membre;
 	}
-	else if(!empty($_GET['id']) && nombreValide($_GET['id']) && $membreActuel->estAdmin())
+	else if(!empty($_GET['id']) && nombreValide($_GET['id']) && $membre->estAdmin())
 	{
 		$membreAModifier = Membre::getMembreId($_GET['id']);
 		if(!$membreAModifier)
@@ -20,13 +20,13 @@ if($membreActuel = Membre::connecte())
 		include ERREURS.'page-introuvable.php';
 		die();
 	}
-	if(isset($_POST['submit']))
+	if(isset($_POST['submit']) && !empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 	{
 		$g = new GestionProfil($membreAModifier);
 		$g->modifierProfil($_POST);
 	}
 	list($id, $prenom, $nom, $statut, $pseudo, $ville, $codePostal, $mail, $dateInscription, $dateDerniereConnexion, $adressePostale) = protegerAffichage($membreAModifier->getInformations());
-	if($membreActuel == $membreAModifier)
+	if($membre == $membreAModifier)
 	{
 		$titre = 'Modification de mon profil';
 	}

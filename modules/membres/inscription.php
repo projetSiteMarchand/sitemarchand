@@ -1,6 +1,6 @@
 <?php
 defined('ALLOWED') or die();
-if(Membre::connecte())
+if($membre)
 {
 	redirect(SITE);
 	die();

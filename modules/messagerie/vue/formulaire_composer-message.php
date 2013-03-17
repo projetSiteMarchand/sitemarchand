@@ -4,19 +4,19 @@
 	<div class="control-group">
 		<label class="control-label" for="sujet">Sujet</label>
 		<div class="controls">
-		<input type="text" maxlength="<?php echo Message::$maxSujet;?>" id="sujet" name="sujet" placeholder="Sujet" required="required"/><br />
+		<input type="text" value="<?php echo $sujet_original;?>" maxlength="<?php echo Message::$maxSujet;?>" id="sujet" name="sujet" placeholder="Sujet" required="required"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="destinataire">Destinataire</label>
 		<div class="controls">
-		<input type="text" maxlength="<?php echo Membre::$maxPseudo;?>" id="destinataire" name="destinataire" placeholder="Destinataire" required="required"/><br />
+		<input type="text" value="<?php echo $destinataire_original;?>" maxlength="<?php echo Membre::$maxPseudo;?>" id="destinataire" name="destinataire" placeholder="Destinataire" required="required"/><br />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="contenu">Message</label>
 		<div class="controls">
-		<textarea id="contenu" name="contenu" required="required"></textarea><br />
+		<textarea id="contenu" name="contenu" required="required"><?php echo $contenu_original;?></textarea><br />
 		</div>
 	</div>
 	<div class="control-group">
