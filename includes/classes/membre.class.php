@@ -539,7 +539,7 @@ class Membre
 	 *
 	 * @return TRUE si la connexion a réussi, FALSE sinon
 	 */
-	public static function connexion($pseudo,$password)
+	public static function checkCredentials($pseudo,$password)
 	{
 		$messages = Messages::getInstance();
 		if($sel = self::getSelMembre($pseudo))
@@ -574,11 +574,9 @@ class Membre
 				}
 				else
 				{
-					$_SESSION['membre'] = new Membre($champs);
-					$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
-					$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-					$_SESSION['membre']->miseAJourDateConnexion();
-					return TRUE;
+					$membre = new Membre($champs);
+					$membre->miseAJourDateConnexion();
+					return $membre;
 				}
 			}
 			else
@@ -690,27 +688,6 @@ class Membre
 		else
 		{
 			$requete->closeCursor();
-			return FALSE;
-		}
-	}
-
-	/**
-	 * @brief Vérifie si le membre est connecté
-	 *
-	 * @return L'instance du membre connecté s'il l'est, FALSE sinon
-	 */
-	public static function connecte()
-	{
-		if(!empty($_SESSION['membre'])
-			&& !empty($_SESSION['user_agent'])
-			&& !empty($_SESSION['ip'])
-			&& $_SESSION['ip'] == $_SERVER['REMOTE_ADDR']
-			&& $_SESSION['user_agent'] == $_SERVER['HTTP_USER_AGENT'])
-		{
-			return $_SESSION['membre'];
-		}
-		else
-		{
 			return FALSE;
 		}
 	}

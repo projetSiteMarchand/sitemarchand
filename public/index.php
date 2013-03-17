@@ -27,10 +27,13 @@ require_once CLASSES.'pdo.class.php';
 require_once CLASSES.'membre.class.php';
 require_once CLASSES.'message.class.php';
 require_once CLASSES.'gestion_profil.class.php';
+require_once CLASSES.'gestion_connexions.class.php';
 require_once CLASSES.'gestion_messagerie.class.php';
 require_once CLASSES.'produit.class.php';
 require_once CLASSES.'produitCatalogue.class.php';
 require_once CLASSES.'produitEnchere.class.php';
+require_once CLASSES.'gestion_produits.class.php';
+require_once CLASSES.'gestion_encheres.class.php';
 
 if(!headers_sent())
 {
@@ -42,7 +45,7 @@ if(!headers_sent())
 	session_start();
 }
 
-$membre = Membre::connecte();
+$membre = GestionConnexions::membreConnecte();
 if($membre)
 {
 	$gestionMessagerie = new GestionMessagerie($membre);

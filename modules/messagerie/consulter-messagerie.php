@@ -1,6 +1,6 @@
 <?php
 defined('ALLOWED') or die();
-if($membre = Membre::connecte())
+if($membre)
 {
 	if(isset($_GET['from']))
 	{

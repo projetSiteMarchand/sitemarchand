@@ -32,9 +32,6 @@ else
 	echo '			<li><a href="?rubrique=membres&action=connexion" title="Connexion">Connexion</a></li>';
 }
 ?>
-				<li>
-					<a href="?rubrique=site&action=apropos" title="À propos">À propos</a>
-				</li>
 			</ul>
 			</div>
 </div>

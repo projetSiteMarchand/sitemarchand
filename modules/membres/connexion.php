@@ -15,7 +15,7 @@ elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 	{
 		if($_POST['captcha'] == $_SESSION['captcha'])
 		{
-			if($membre = Membre::connexion($_POST['pseudo'],$_POST['password']))
+			if($membre = GestionConnexions::connexion($_POST['pseudo'],$_POST['password']))
 			{
 				redirect(SITE.'?from=connexion');
 				die();

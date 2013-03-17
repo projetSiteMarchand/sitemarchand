@@ -2,7 +2,7 @@
 defined('ALLOWED') or die();
 if($membre && empty($_GET['id']) && empty($_GET['pseudo']))
 {
-	$membre = Membre::connecte();
+	$membre = GestionConnexions::membreConnecte();
 }
 else if(!empty($_GET['id']) && nombreValide($_GET['id']))
 {

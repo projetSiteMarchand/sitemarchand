@@ -1,11 +1,11 @@
 			</div>
 		</div>
-	</div>
-		<footer>
-		</footer>
 <?php
 if(AFFICHER_ERREURS)
 	$messages->afficherErreursPHP();
 ?>
+	</div>
+		<footer>
+		</footer>
 	</body>
 </html>
