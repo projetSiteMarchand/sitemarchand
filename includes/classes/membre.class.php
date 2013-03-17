@@ -474,9 +474,13 @@ class Membre
 		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
 		if($requete->execute())
 		{
-			$champs = $requete->fetch();
+			if($champs = $requete->fetch())
+			{
+				$requete->closeCursor();
+				return new Membre($champs);
+			}
 			$requete->closeCursor();
-			return new Membre($champs);
+			return FALSE;
 		}
 		else
 		{
