@@ -97,6 +97,30 @@ create table COMMENTAIRE
 	primary key(idCommentaire)
 );
 
+-- table EVALUATION
+drop table if exists EVALUATION;
+create table EVALUATION
+(
+	idEvaluation int AUTO_INCREMENT NOT NULL,
+	idMembre int NOT NULL,
+	note tinyint(1) NOT NULL,
+	commentaire blob NOT NULL,
+	primary key(idEvaluation)
+);
+
+-- table ENCHERE
+drop table if exists ENCHERE;
+create table ENCHERE
+(
+	idEnchere int AUTO_INCREMENT NOT NULL,
+	montantEnchere decimal(19,4) NOT NULL,
+	dateEnchere datetime NOT NULL,
+	idEvaluationVendeur int NOT NULL DEFAULT 0,
+	idEvaluationAcheteur int NOT NULL DEFAULT 0,
+	idProduitEnchere int NOT NULL,
+	primary key(idEnchere)
+
+);
 
 -- clés étrangères
 alter table MESSAGE add foreign key fk_mes_destinataire(idDestinataire) REFERENCES MEMBRE(id);
@@ -112,10 +136,20 @@ alter table PRODUIT_ENCHERE add foreign key fk_prode_pro(idProprietaire) REFEREN
 alter table COMMENTAIRE add foreign key fk_com_mem(idMembre) REFERENCES MEMBRE(id);
 alter table COMMENTAIRE add foreign key fk_com_prod(idProduit) REFERENCES PRODUIT_CATALOGUE(idProduit);
 
+alter table ENCHERE add foreign key fk_ench_evalv(idEvaluationVendeur) REFERENCES MEMBRE(id);
+alter table ENCHERE add foreign key fk_ench_evala(idEvaluationAcheteur) REFERENCES MEMBRE(id);
+alter table ENCHERE add foreign key fk_ench_prod(idProduitEnchere) REFERENCES PRODUIT_ENCHERE(idProduit);
+
+alter table EVALUATION add foreign key fk_eval_mem(idMembre) REFERENCES MEMBRE(id);
+
 -- exemples
+-- admin:admin
 insert into MEMBRE VALUES(1, 'prenom','nom','admin','admin','AdminTown','31337','admin@admin.com',Now(),Now(),'Admin street','3abb1bcb6f8757ac570cd84d8877d6385ae4c394d21bc1466301bc2f1b759cc4215e75ed708c183538face54dbb3bbc05a59734be48e7bdd357d0ac05901108b','13MzUxMzhmNWY4Zjk0MDIx','',0);
+-- membre:membre
 insert into MEMBRE VALUES(2, 'prenom','nom','membre','membre','membreTown','31337','membre@membre.com',Now(),Now(),'membre street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
+-- pauvre:membre
 insert into MEMBRE VALUES(3, 'pauvre','LePauvre','membre','pauvre','pauvreTown','31337','pauvre@membre.com',Now(),Now(),'pauvre street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
+-- philosophe:membre
 insert into MEMBRE VALUES(4, 'philosophe','LePhilosophe','membre','philosophe','philoTown','31337','philo@membre.com',Now(),Now(),'philo street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
 
 insert into MESSAGE VALUES(1, 1, 2, 'Mahn Mahna', 'The question is, what is a Mahna Mahna ?', Now()-600, 1);
