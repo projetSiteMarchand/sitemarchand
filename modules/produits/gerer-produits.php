@@ -14,7 +14,7 @@ if($membre && $membre->estAdmin())
 		}
 	}
 
-	if(!($produits = ProduitCatalogue::getProduitsCatalogue()))
+	if(!($produits = GestionProduits::recupererListeProduits()))
 	{
 		$produits = array();
 		$messages->ajouterInformation('Aucun produit présent dans le catalogue');

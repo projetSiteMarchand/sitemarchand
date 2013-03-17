@@ -25,6 +25,11 @@ class ProduitCatalogue extends Produit
         );
     }
 
+    public function supprimer()
+    {
+        return TRUE;
+    }
+
     public static function getProduitId($id)
     {
 	$pdo = PDO2::getInstance();
@@ -37,9 +42,15 @@ class ProduitCatalogue extends Produit
 	$requete->bindValue(':id',$id,PDO::PARAM_INT);
 	if($requete->execute())
 	{
-	    $d = $requete->fetch();
+	    if($d = $requete->fetch())
+            {
+	        $requete->closeCursor();
+	        return new ProduitCatalogue($d);
+            }
+	    $messages = Messages::getInstance();
 	    $requete->closeCursor();
-	    return new ProduitCatalogue($d);
+            $messages->ajouterErreur('Le produit n\'existe pas');
+            return FALSE;
 	}
 	else
 	{

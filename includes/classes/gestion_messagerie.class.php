@@ -13,6 +13,12 @@ class GestionMessagerie
 		return Message::getCountMessagesNonLus($this->membre);
 	}
 
+	public function recupererInformationsMessage($message)
+	{
+		return protegerAffichage($message->getInformations());
+	}
+
+
 	public function envoyerMessage($post)
 	{
 		$destinataire = empty($post['destinataire']) ? '' : $post['destinataire'];
@@ -84,11 +90,11 @@ class GestionMessagerie
 	}
 
 	/**
-		* @brief Vérifie si le membre est le propriétaire du message
-		*
-		* @param $message
-		*
-		* @return 
+	 * @brief Vérifie si le membre est le propriétaire du message
+	 *
+	 * @param $message
+	 *
+	 * @return 
 	 */
 	public function estDestinataireMessage($message)
 	{

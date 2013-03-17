@@ -16,7 +16,7 @@
 <?php
 foreach($produits as $produit)
 {
-        list($id, $nomProduit, $stock, $prixUnitaire) = protegerAffichage($produit->getInformations());
+        list($id, $nomProduit, $stock, $prixUnitaire) = GestionProduits::recupererInformationsProduit($produit);
 	echo '
 		<tr>
 			<td>'.$id.'</td>
