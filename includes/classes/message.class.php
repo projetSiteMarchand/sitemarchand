@@ -32,6 +32,19 @@ class Message
 		return $lu;
 	}
 
+	public function getInformations()
+	{
+		return array(
+			$this->idMessage,
+			$this->destinataire->pseudo,
+			$this->expediteur->pseudo,
+			$this->contenu,
+			$this->sujet,
+			$this->dateEnvoi,
+			$this->lu,
+			);
+	}
+
 	/**
 		* @brief Met le message en lu
 		*
@@ -122,6 +135,28 @@ class Message
 
 	}
 
+	public static function getCountMessagesNonLu($membre)
+	{
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare
+			('SELECT COUNT(*)
+			FROM '.self::$nomTable.'
+			WHERE idDestinataire = :idDestinataire
+			AND lu = 0'
+		);
+		$requete->bindValue(':idDestinataire',$membre->getId(),PDO::PARAM_INT);
+		if(!$requete->execute())
+		{
+			$messages = Messages::getInstance();
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+		$count = $requete->fetchColumn();
+		$requete->closeCursor();
+		return $count;
+	}
+
 	/**
 		* @brief Récupère la liste des messages d'un membre qui en est le destinataire
 		*
@@ -136,7 +171,7 @@ class Message
 			WHERE idDestinataire = :idDestinataire
 			ORDER BY dateEnvoi'
 		);
-		$requete->bindValue(':idDestinataire',$membre->id,PDO::PARAM_INT);
+		$requete->bindValue(':idDestinataire',$membre->getId(),PDO::PARAM_INT);
 		if(!$requete->execute())
 		{
 			$messages = Messages::getInstance();
