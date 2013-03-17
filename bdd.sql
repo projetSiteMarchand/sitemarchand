@@ -39,5 +39,77 @@ create table MESSAGE
 	lu boolean NOT NULL DEFAULT 0, 
 	primary key(idMessage)
 );
+
+-- table PRODUIT_ENCHERE
+drop table if exists PRODUIT_ENCHERE;
+create table PRODUIT_ENCHERE
+(
+	idProduit int AUTO_INCREMENT NOT NULL,
+	nomProduit varchar(255) NOT NULL,
+	dateDebut datetime NOT NULL,
+	dateFin datetime NOT NULL,
+	prixInitial decimal(19,4) NOT NULL,
+	-- la photo on la stock pas ici mais dans le dossier img/produits/ID_PRODUIT.png
+	idProprietaire int NOT NULL,
+	idDescriptif int NOT NULL,
+	primary key(idProduit)
+);
+
+-- table PRODUIT_CATALOGUE
+drop table if exists PRODUIT_CATALOGUE;
+create table PRODUIT_CATALOGUE
+(
+	idProduit int AUTO_INCREMENT NOT NULL,
+	nomProduit varchar(255) NOT NULL,
+	stock int NOT NULL,
+	prixUnitaire decimal(19,4) NOT NULL,
+	-- la photo on la stock pas ici mais dans le dossier img/produits/ID_PRODUIT.png
+	idDescriptif int NOT NULL,
+	primary key(idProduit)
+);
+
+-- table DESCRIPTIF
+drop table if exists DESCRIPTIF;
+create table DESCRIPTIF
+(
+	idDescriptif int AUTO_INCREMENT NOT NULL,
+	idLangue int NOT NULL,
+	libelleDescriptif blob NOT NULL,
+	primary key(idDescriptif)
+);
+
+-- table LANGUE
+drop table if exists LANGUE;
+create table LANGUE
+(
+	idLangue int AUTO_INCREMENT NOT NULL,
+	libelleLangue varchar(150) NOT NULL,
+	primary key(idLangue)
+);
+
+
+-- table COMMENTAIRE
+drop table if exists COMMENTAIRE;
+create table COMMENTAIRE
+(
+	idCommentaire int AUTO_INCREMENT NOT NULL,
+	idMembre int NOT NULL,
+	idProduit int NOT NULL,
+	contenu blob NOT NULL,
+	primary key(idCommentaire)
+);
+
+
+-- clés étrangères
 alter table MESSAGE add foreign key fk_mes_destinataire(idDestinataire) REFERENCES MEMBRE(id);
 alter table MESSAGE add foreign key fk_mes_expediteur(idExpediteuR) refereNCES MEMBRE(id);
+
+alter table DESCRIPTIF add foreign key fk_desc_langue(idLangue) REFERENCES LANGUE(idLangue);
+
+alter table PRODUIT_CATALOGUE add foreign key fk_prodc_desc(idDescriptif) REFERENCES DESCRIPTIF(idDescriptif);
+
+alter table PRODUIT_ENCHERE add foreign key fk_prode_desc(idDescriptif) REFERENCES DESCRIPTIF(idDescriptif);
+alter table PRODUIT_ENCHERE add foreign key fk_prode_pro(idProprietaire) REFERENCES MEMBRE(id);
+
+alter table COMMENTAIRE add foreign key fk_com_mem(idMembre) REFERENCES MEMBRE(id);
+alter table COMMENTAIRE add foreign key fk_com_prod(idProduit) REFERENCES PRODUIT_CATALOGUE(idProduit);
