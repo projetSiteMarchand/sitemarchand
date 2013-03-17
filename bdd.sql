@@ -36,6 +36,7 @@ create table MESSAGE
 	contenu blob NOT NULL,
 	sujet varchar(255) NOT NULL,
 	dateEnvoi datetime NOT NULL, 
+	lu boolean NOT NULL DEFAULT 0, 
 	primary key(idMessage)
 );
 alter table MESSAGE add foreign key fk_mes_destinataire(idDestinataire) REFERENCES MEMBRE(id);

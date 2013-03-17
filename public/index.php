@@ -25,6 +25,7 @@ else
 require_once FONCTIONS.'common.php';
 require_once CLASSES.'pdo.class.php';
 require_once CLASSES.'membre.class.php';
+require_once CLASSES.'message.class.php';
 require_once CLASSES.'gestion_profil.class.php';
 
 if(!headers_sent())
