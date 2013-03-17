@@ -123,6 +123,26 @@ create table ENCHERE
 
 );
 
+-- table COMMANDE
+drop table if exists COMMANDE;
+create table COMMANDE
+(
+    idCommande int NOT NULL,
+    prixLivraison int NOT NULL,
+    primary key(idCommande)
+);
+
+-- table QUANTITE
+drop table if exists QUANTITE;
+create table QUANTITE
+(
+    idProduit int NOT NULL,
+    idCommande int NOT NULL,
+    quantite int NOT NULL,
+    primary key(idProduit,idCommande)
+);
+
+
 -- clés étrangères
 alter table MESSAGE add foreign key fk_mes_destinataire(idDestinataire) REFERENCES MEMBRE(id);
 alter table MESSAGE add foreign key fk_mes_expediteur(idExpediteuR) refereNCES MEMBRE(id);
@@ -143,6 +163,9 @@ alter table ENCHERE add foreign key fk_ench_ench(idEncherisseur) REFERENCES MEMB
 alter table ENCHERE add foreign key fk_ench_prod(idProduitEnchere) REFERENCES PRODUIT_ENCHERE(idProduit);
 
 alter table EVALUATION add foreign key fk_eval_mem(idMembre) REFERENCES MEMBRE(id);
+
+alter table QUANTITE add foreign key fk_quant_pro(idProduit)  REFERENCES PRODUIT_CATALOGUE(idProduit);
+alter table QUANTITE add foreign key fk_quant_com(idCommande) REFERENCES COMMANDE(idCommande);
 
 -- exemples
 -- admin:admin
