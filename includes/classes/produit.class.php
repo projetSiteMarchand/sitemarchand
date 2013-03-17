@@ -18,5 +18,10 @@ class Produit
         }
         return $images_path;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
 ?>
