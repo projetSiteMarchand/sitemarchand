@@ -19,8 +19,8 @@ class Enchere
         $this->dateEnchere = $dateEnchere;
         $this->evaluationVendeur = $evaluationVendeur;
         $this->evaluationAcheteur = $evaluationAcheteur;
-        $this->produitEnchere = $produitEnchere;
-        $this->encherisseur = $encherisseur;
+        $this->produitEnchere = ProduitEnchere::getProduitId($produitEnchere);
+        $this->encherisseur = Membre::getMembreId($encherisseur);
     }
 
     public function getEvaluationVendeur()
