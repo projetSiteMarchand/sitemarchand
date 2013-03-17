@@ -9,16 +9,18 @@ class Enchere
     private $evaluationVendeur;
     private $evaluationAcheteur;
     private $produitEnchere;
+    private $encherisseur;
 
     public function __construct($enchere)
     {
-        list($idEnchere, $montantEnchere, $dateEnchere, $evaluationVendeur, $evaluationVendeur, $produitEnchere) = $enchere;
+        list($idEnchere, $montantEnchere, $dateEnchere, $evaluationVendeur, $evaluationVendeur, $produitEnchere,$encherisseur) = $enchere;
         $this->idEnchere = $idEnchere;
         $this->montantEnchere = $montantEnchere;
         $this->dateEnchere = $dateEnchere;
         $this->evaluationVendeur = $evaluationVendeur;
         $this->evaluationAcheteur = $evaluationAcheteur;
         $this->produitEnchere = $produitEnchere;
+        $this->encherisseur = $encherisseur;
     }
 
     public function getEvaluationVendeur()
@@ -51,13 +53,14 @@ class Enchere
             $this->produitEncher);
     }
 
-    public static function encherir($montant, $produitEnchere)
+    public static function encherir($montant, $produitEnchere, $encherisseur)
     {
 	$messages = Messages::getInstance();
 	$pdo = PDO2::getInstance();
-	$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (montantEnchere,dateEnchere,idProduitEnchere) VALUES(:montantEnchere,Now(),:idProduitEnchere)');
+	$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (montantEnchere,dateEnchere,idProduitEnchere,idEncherisseur) VALUES(:montantEnchere,Now(),:idProduitEnchere, :idEncherisseur)');
 	$requete->bindValue(':montantEnchere',$montant,PDO::PARAM_INT);
 	$requete->bindValue(':idProduitEnchere',$produitEnchere->getId(),PDO::PARAM_INT);
+	$requete->bindValue(':idEncherisseur',$encherisseur->getId(),PDO::PARAM_INT);
 	if($requete->execute())
 	{
 	    $requete->closeCursor();
@@ -75,7 +78,7 @@ class Enchere
     {
 	$pdo = PDO2::getInstance();
 	$requete = $pdo->prepare
-	    ('SELECT idEnchere, montantEnchere,dateEnchere,idEvaluationVendeur, idEvaluationAcheteur, idProduitEnchere
+	    ('SELECT idEnchere, montantEnchere,dateEnchere,idEvaluationVendeur, idEvaluationAcheteur, idProduitEnchere, idEncherisseur
 	    FROM '.self::$nomTable.'
 	    WHERE idProduitEnchere = :idProduitEnchere
 	    ORDER BY dateEnchere DESC'

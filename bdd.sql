@@ -118,6 +118,7 @@ create table ENCHERE
 	idEvaluationVendeur int NOT NULL DEFAULT 0,
 	idEvaluationAcheteur int NOT NULL DEFAULT 0,
 	idProduitEnchere int NOT NULL,
+	idEncherisseur int NOT NULL,
 	primary key(idEnchere)
 
 );
@@ -138,6 +139,7 @@ alter table COMMENTAIRE add foreign key fk_com_prod(idProduit) REFERENCES PRODUI
 
 alter table ENCHERE add foreign key fk_ench_evalv(idEvaluationVendeur) REFERENCES MEMBRE(id);
 alter table ENCHERE add foreign key fk_ench_evala(idEvaluationAcheteur) REFERENCES MEMBRE(id);
+alter table ENCHERE add foreign key fk_ench_ench(idEncherisseur) REFERENCES MEMBRE(id);
 alter table ENCHERE add foreign key fk_ench_prod(idProduitEnchere) REFERENCES PRODUIT_ENCHERE(idProduit);
 
 alter table EVALUATION add foreign key fk_eval_mem(idMembre) REFERENCES MEMBRE(id);
