@@ -4,7 +4,14 @@ if($membre = Membre::connecte())
 {
 	if(isset($_GET['from']))
 	{
-		$messages->ajouterSucces('Message envoyé !');
+		if($_GET['from'] == 'envoyer-message')
+		{
+			$messages->ajouterSucces('Message envoyé !');
+		}
+		else if($_GET['from'] == 'supprimer-message')
+		{
+			$messages->ajouterSucces('Message supprimé !');
+		}
 	}
 	if(!($listeMessages = Message::getMessagesDestinataire($membre)))
 	{

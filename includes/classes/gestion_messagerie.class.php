@@ -53,12 +53,39 @@ class GestionMessagerie
 		{
 			return FALSE;
 		}
-		if($message->getDestinataire()->getId() != $this->membre->getId())
+		if(!($this->estProprietaireMessage($message)))
 		{
 			return FALSE;
 		}
 		$message->messageLu();
 		return $message;
+	}
+
+	public function supprimerMessage($id)
+	{
+		$messages = Messages::getInstance();
+		if(!($message = Message::getMessageId($id)))
+		{
+			return FALSE;
+		}
+		if(!($this->estProprietaireMessage($message)))
+		{
+			return FALSE;
+		}
+		$message->supprimer();
+		redirect(SITE.'?rubrique=messagerie&action=consulter-messagerie&from=supprimer-message');
+	}
+
+	/**
+		* @brief Vérifie si le membre est le propriétaire du message
+		*
+		* @param $message
+		*
+		* @return 
+	 */
+	public function estProprietaireMessage($message)
+	{
+		return ($message->getDestinataire()->getId() == $this->membre->getId());
 	}
 
 	public static function isDestinataireValide($pseudo)

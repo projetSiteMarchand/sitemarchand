@@ -55,8 +55,8 @@ class Membre
 
 
 	/**
-		* @brief Déconnecte le membre
-		*
+	 * @brief Déconnecte le membre
+	 *
 	 */
 	public function deconnecter()
 	{
@@ -68,9 +68,9 @@ class Membre
 	}
 
 	/**
-		* @brief Récupère l'id du membre
-		*
-		* @return L'id du membre
+	 * @brief Récupère l'id du membre
+	 *
+	 * @return L'id du membre
 	 */
 	public function getId()
 	{
@@ -78,9 +78,9 @@ class Membre
 	}
 
 	/**
-		* @brief Récupère le pseudo du membre
-		*
-		* @return Le pseudo du membre
+	 * @brief Récupère le pseudo du membre
+	 *
+	 * @return Le pseudo du membre
 	 */
 	public function getPseudo()
 	{
@@ -88,9 +88,9 @@ class Membre
 	}
 
 	/**
-		* @brief Vérifie si le membre est admin
-		*
-		* @return TRUE si le membre est admin, FALSE sinon
+	 * @brief Vérifie si le membre est admin
+	 *
+	 * @return TRUE si le membre est admin, FALSE sinon
 	 */
 	public function estAdmin()
 	{
@@ -108,9 +108,9 @@ class Membre
 	}
 
 	/**
-		* @brief Récupère l'ensemble des informations concernant le membre excepté son mot de passe
-		*
-		* @return Un tableau associatif des informations du membre
+	 * @brief Récupère l'ensemble des informations concernant le membre excepté son mot de passe
+	 *
+	 * @return Un tableau associatif des informations du membre
 	 */
 	public function getInformations()
 	{
@@ -126,13 +126,13 @@ class Membre
 			$this->dateInscription,
 			$this->dateDerniereConnexion,
 			$this->adressePostale
-			);
+		);
 	}
 
 	/**
-		* @brief Déconnecte et supprime le membre de la base de données
-		*
-		* @return TRUE si la suppression a réussi, FALSE sinon
+	 * @brief Déconnecte et supprime le membre de la base de données
+	 *
+	 * @return TRUE si la suppression a réussi, FALSE sinon
 	 */
 	public function supprimer()
 	{
@@ -142,6 +142,10 @@ class Membre
 		$messages = Messages::getInstance();
 
 		$pdo = PDO2::getInstance();
+		// On supprime tous les messages de ce membre
+		$requete = $pdo->prepare('DELETE FROM '.Message::$nomTable.' WHERE idDestinataire=:id OR idExpediteur=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		$requete->execute();
 		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');
 		$requete->bindValue(':id',$id,PDO::PARAM_INT);
 		if($requete->execute())
@@ -158,17 +162,17 @@ class Membre
 	}
 
 	/**
-		* @brief Modifie le profil d'un membre
-		*
-		* @param $prenom
-		* @param $nom
-		* @param $pseudo
-		* @param $ville
-		* @param $codePostal
-		* @param $mail
-		* @param $adressePostale
-		*
-		* @return TRUE si la mise à jour a fonctionné, FALSE sinon
+	 * @brief Modifie le profil d'un membre
+	 *
+	 * @param $prenom
+	 * @param $nom
+	 * @param $pseudo
+	 * @param $ville
+	 * @param $codePostal
+	 * @param $mail
+	 * @param $adressePostale
+	 *
+	 * @return TRUE si la mise à jour a fonctionné, FALSE sinon
 	 */
 	public function modifierProfil($prenom, $nom, $ville, $codePostal, $mail, $adressePostale)
 	{
@@ -197,9 +201,9 @@ class Membre
 	}
 
 	/**
-		* @brief Met à jour la date de dernière connexion du membre à maintenant
-		*
-		* @return TRUE si la màj a fonctionné, FALSE sinon
+	 * @brief Met à jour la date de dernière connexion du membre à maintenant
+	 *
+	 * @return TRUE si la màj a fonctionné, FALSE sinon
 	 */
 	private function miseAJourDateConnexion()
 	{
@@ -234,11 +238,11 @@ class Membre
 	}
 
 	/**
-		* @brief Modifie le mot de passe du membre
-		*
-		* @param $newPassword Nouveau mot de passe en clair
-		*
-		* @return TRUE si la modification a réussi, FALSE sinon
+	 * @brief Modifie le mot de passe du membre
+	 *
+	 * @param $newPassword Nouveau mot de passe en clair
+	 *
+	 * @return TRUE si la modification a réussi, FALSE sinon
 	 */
 	public function modifierMotDePasse($newPassword)
 	{
@@ -296,11 +300,11 @@ class Membre
 	}
 
 	/**
-		* @brief Déconnecte un membre
-		*
-		* @param $membre Membre à déconnecter
-		*
-		* @return  TRUE si la déconnexion a réussie, FALSE sinon
+	 * @brief Déconnecte un membre
+	 *
+	 * @param $membre Membre à déconnecter
+	 *
+	 * @return  TRUE si la déconnexion a réussie, FALSE sinon
 	 */
 	public static function deconnecterMembre($membre)
 	{
@@ -335,11 +339,11 @@ class Membre
 	}
 
 	/**
-		* @brief Déconnecte et supprime un membre de la base de données
-		*
-		* @param $membre
-		*
-		* @return TRUE si la suppression a réussi, FALSE sinon
+	 * @brief Déconnecte et supprime un membre de la base de données
+	 *
+	 * @param $membre
+	 *
+	 * @return TRUE si la suppression a réussi, FALSE sinon
 	 */
 	public static function supprimerMembre($membre)
 	{
@@ -348,6 +352,9 @@ class Membre
 		$messages = Messages::getInstance();
 
 		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('DELETE FROM '.Message::$nomTable.' WHERE idDestinataire=:id OR idExpediteur=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		$requete->execute();
 		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE id=:id');
 		$requete->bindValue(':id',$id,PDO::PARAM_INT);
 		if($requete->execute())
@@ -363,9 +370,9 @@ class Membre
 		}
 	}
 	/**
-		* @brief Génère de manière pseudo-aléatoire un sel pour l'algorithme blowfish
-		*
-		* @return Un sel
+	 * @brief Génère de manière pseudo-aléatoire un sel pour l'algorithme blowfish
+	 *
+	 * @return Un sel
 	 */
 	public static function generateSalt($log = 13)
 	{
@@ -379,7 +386,7 @@ class Membre
 		 *else
 		 *{
 		 */
-			$output = hash('md5',uniqid('',TRUE));
+		$output = hash('md5',uniqid('',TRUE));
 		//}
 
 		//Pour blowfish le salt doit faire 22 charsa
@@ -388,12 +395,12 @@ class Membre
 	}
 
 	/**
-		* @brief Chiffre un mot de passe en blowfish puis le hash en sha512
-		*
-		* @param $password Mot de passe en clair
-		* @param $salt Sel
-		*
-		* @return Le mot de passe chiffré hashé en sha512
+	 * @brief Chiffre un mot de passe en blowfish puis le hash en sha512
+	 *
+	 * @param $password Mot de passe en clair
+	 * @param $salt Sel
+	 *
+	 * @return Le mot de passe chiffré hashé en sha512
 	 */
 	public static function hashPassword($password,$salt)
 	{
@@ -404,18 +411,18 @@ class Membre
 	}
 
 	/**
-		* @brief Ajoute un membre dans la base de données
-		*
-		* @param $prenom
-		* @param $nom
-		* @param $pseudo
-		* @param $password
-		* @param $ville
-		* @param $codePostal
-		* @param $mail
-		* @param $adressePostale
-		*
-		* @return Une instance du membre qui vient d'être ajouté si l'insertion a réussi, FALSE sinon
+	 * @brief Ajoute un membre dans la base de données
+	 *
+	 * @param $prenom
+	 * @param $nom
+	 * @param $pseudo
+	 * @param $password
+	 * @param $ville
+	 * @param $codePostal
+	 * @param $mail
+	 * @param $adressePostale
+	 *
+	 * @return Une instance du membre qui vient d'être ajouté si l'insertion a réussi, FALSE sinon
 	 */
 	public static function ajouterMembre($prenom, $nom, $pseudo, $password, $ville, $codePostal, $mail, $adressePostale)
 	{
@@ -456,11 +463,11 @@ class Membre
 	}
 
 	/**
-		* @brief Récupère un membre depuis la base de données
-		*
-		* @param $pseudo pseudo du membre
-		*
-		* @return Une instance du membre
+	 * @brief Récupère un membre depuis la base de données
+	 *
+	 * @param $pseudo pseudo du membre
+	 *
+	 * @return Une instance du membre
 	 */
 	public static function getMembrePseudo($pseudo)
 	{
@@ -492,11 +499,11 @@ class Membre
 
 	}
 	/**
-		* @brief Récupère un membre depuis la base de données
-		*
-		* @param $id id du membre
-		*
-		* @return Une instance du membre
+	 * @brief Récupère un membre depuis la base de données
+	 *
+	 * @param $id id du membre
+	 *
+	 * @return Une instance du membre
 	 */
 	public static function getMembreId($id)
 	{
@@ -525,12 +532,12 @@ class Membre
 	}
 
 	/**
-		* @brief Tente de connecter un membre en vérifiant la concordance des informations.
-		*
-		* @param $pseudo pseudo du membre
-		* @param $password mot de passe du membre
-		*
-		* @return TRUE si la connexion a réussi, FALSE sinon
+	 * @brief Tente de connecter un membre en vérifiant la concordance des informations.
+	 *
+	 * @param $pseudo pseudo du membre
+	 * @param $password mot de passe du membre
+	 *
+	 * @return TRUE si la connexion a réussi, FALSE sinon
 	 */
 	public static function connexion($pseudo,$password)
 	{
@@ -590,11 +597,11 @@ class Membre
 	}
 
 	/**
-		* @brief Récupère le sel d'un membre
-		*
-		* @param $pseudo pseudo du membre
-		*
-		* @return le sel si le membre existe, FALSE sinon
+	 * @brief Récupère le sel d'un membre
+	 *
+	 * @param $pseudo pseudo du membre
+	 *
+	 * @return le sel si le membre existe, FALSE sinon
 	 */
 	public static function getSelMembre($pseudo)
 	{
@@ -624,11 +631,11 @@ class Membre
 	}
 
 	/**
-		* @brief Valide l'inscription d'un membre
-		*
-		* @param $hash Hash de validation
-		*
-		* @return TRUE si la validation a réussi, FALSE sinon
+	 * @brief Valide l'inscription d'un membre
+	 *
+	 * @param $hash Hash de validation
+	 *
+	 * @return TRUE si la validation a réussi, FALSE sinon
 	 */
 	public static function valider($hash)
 	{
@@ -650,9 +657,9 @@ class Membre
 	}
 
 	/**
-		* @brief Récupère la liste des membres
-		*
-		* @return Une liste de membres, ou FALSE si aucun membres ou si ça n'a pas réussi
+	 * @brief Récupère la liste des membres
+	 *
+	 * @return Une liste de membres, ou FALSE si aucun membres ou si ça n'a pas réussi
 	 */
 	public static function getMembres()
 	{
@@ -688,9 +695,9 @@ class Membre
 	}
 
 	/**
-		* @brief Vérifie si le membre est connecté
-		*
-		* @return L'instance du membre connecté s'il l'est, FALSE sinon
+	 * @brief Vérifie si le membre est connecté
+	 *
+	 * @return L'instance du membre connecté s'il l'est, FALSE sinon
 	 */
 	public static function connecte()
 	{
@@ -709,11 +716,11 @@ class Membre
 	}
 
 	/**
-		* @brief Vérifie si un pseudo est déjà utilisé
-		*
-		* @param $pseudo pseudo à vérifier
-		*
-		* @return TRUE si le pseudo n'est pas utilisé, FALSE sinon
+	 * @brief Vérifie si un pseudo est déjà utilisé
+	 *
+	 * @param $pseudo pseudo à vérifier
+	 *
+	 * @return TRUE si le pseudo n'est pas utilisé, FALSE sinon
 	 */
 	public static function checkPseudo($pseudo)
 	{

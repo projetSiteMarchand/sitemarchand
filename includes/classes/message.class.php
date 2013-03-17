@@ -4,7 +4,7 @@ class Message
 	public static $maxSujet = 255;
 	public static $minSujet = 1;
 	
-	private static $nomTable = 'MESSAGE';
+	public static $nomTable = 'MESSAGE';
 
 	private $idMessage;
 	private $destinataire;
@@ -46,6 +46,26 @@ class Message
 			$this->dateEnvoi,
 			$this->lu,
 			);
+	}
+
+	public function supprimer()
+	{
+		$id = $this->idMessage;
+		$messages = Messages::getInstance();
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE idMessage=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
 	}
 
 	public function getDestinataire()

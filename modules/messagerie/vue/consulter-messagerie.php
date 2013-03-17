@@ -12,6 +12,7 @@
 <?php
 foreach($listeMessages as $message)
 {
+	list($idOriginal, $destinataireOriginal, $expediteurOriginal, $sujetOriginal, $contenuOriginal, $dateEnvoiOriginal, $luOriginal) = $message->getInformations();
 	list($id, $destinataire, $expediteur, $sujet, $contenu, $dateEnvoi, $lu) = protegerAffichage($message->getInformations());
 	$dateEnvoi = ago($dateEnvoi);
 	if(!$lu)
@@ -25,11 +26,13 @@ foreach($listeMessages as $message)
 			<td>
 <a href="?rubrique=messagerie&action=lire-message&id='.$id.'" title="Lire le message">'.$sujet.'</a>
 			</td>
-			<td>'.$expediteur.'</td>
+			<td>
+<a href="?rubrique=membres&action=consulter-profil&pseudo='.urlencode($expediteurOriginal).'" title="Voir le profil de l\'expéditeur">'.$expediteur.'</a>
+</td>
 			<td>'.$dateEnvoi.'</td>
 			<td>
 	<div class="btn-group">
-<a class="btn btn-small" href="?rubrique=messagerie&action=supprimer-message&id='.$id.'&token='.$_SESSION['token'].'" title="Supprimer le message"><i class="icon-remove"></i></a>&nbsp;
+<a class="btn btn-small" href="?rubrique=messagerie&action=supprimer-message&id='.$id.'&token='.$_SESSION['token'].'" title="Supprimer le message"><i class="icon-trash"></i></a>&nbsp;
 <a class="btn btn-small" href="?rubrique=messagerie&action=lire-message&id='.$id.'" title="Lire le message"><i class="icon-eye-open"></i></a>
 	</div>
 			</td>

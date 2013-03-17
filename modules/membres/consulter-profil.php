@@ -1,12 +1,16 @@
 <?php
 defined('ALLOWED') or die();
-if($membre && empty($_GET['id']))
+if($membre && empty($_GET['id']) && empty($_GET['pseudo']))
 {
 	$membre = Membre::connecte();
 }
 else if(!empty($_GET['id']) && nombreValide($_GET['id']))
 {
 	$membre = Membre::getMembreId($_GET['id']);
+}
+else if(!empty($_GET['pseudo']) && GestionProfil::isPseudoValide($_GET['pseudo']))
+{
+	$membre = Membre::getMembrePseudo($_GET['pseudo']);
 }
 else
 {
