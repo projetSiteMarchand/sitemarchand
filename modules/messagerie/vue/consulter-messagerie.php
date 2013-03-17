@@ -2,11 +2,10 @@
 <table class="table table-striped table-bordered table-condensed">
 <thead>
 	<tr>
-		<th>#</th>
+		<th width="40%">Sujet</th>
 		<th>De</th>
-		<th>Sujet</th>
-		<th>Reçu le</th>
-		<th>Action</th>
+		<th width="25%">Reçu le</th>
+		<th width="10%">Action</th>
 	</tr>
 </thead>
 <tbody>
@@ -14,19 +13,16 @@
 foreach($listeMessages as $message)
 {
 	list($id, $destinataire, $expediteur, $sujet, $contenu, $dateEnvoi, $lu) = protegerAffichage($message->getInformations());
-	$idText = $id;
 	if(!$lu)
 	{
-		$idText = '<b>'.$id.'</b>';
 		$expediteur = '<b>'.$expediteur.'</b>';
 		$sujet = '<b>'.$sujet.'</b>';
 		$dateEnvoi = '<b>'.$dateEnvoi.'</b>';
 	}
 	echo '
 		<tr'.($lu ? '' : ' class="info"').'>
-			<td>'.$idText.'</td>
-			<td>'.$expediteur.'</td>
 			<td>'.$sujet.'</td>
+			<td>'.$expediteur.'</td>
 			<td>'.$dateEnvoi.'</td>
 			<td>
 <a href="?rubrique=messagerie&action=supprimer-message&id='.$id.'" title="Supprimer le message"><i class="icon-remove"></i></a>&nbsp;

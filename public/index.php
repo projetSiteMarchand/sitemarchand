@@ -27,6 +27,7 @@ require_once CLASSES.'pdo.class.php';
 require_once CLASSES.'membre.class.php';
 require_once CLASSES.'message.class.php';
 require_once CLASSES.'gestion_profil.class.php';
+require_once CLASSES.'gestion_messagerie.class.php';
 
 if(!headers_sent())
 {
@@ -37,6 +38,13 @@ if(!headers_sent())
 	header('Pragma: no-cache');
 	session_start();
 }
+
+$membre = Membre::connecte();
+if($membre)
+{
+	$gestionMessagerie = new GestionMessagerie($membre);
+}
+
 $_GET['action'] = (empty($_GET['action'])) ? 'accueil' : $_GET['action'];
 $_GET['rubrique'] = (empty($_GET['rubrique'])) ? 'site' : $_GET['rubrique'];
 if(sansTableau($_GET)

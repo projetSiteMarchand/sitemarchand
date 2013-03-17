@@ -458,6 +458,38 @@ class Membre
 	/**
 		* @brief Récupère un membre depuis la base de données
 		*
+		* @param $pseudo pseudo du membre
+		*
+		* @return Une instance du membre
+	 */
+	public static function getMembrePseudo($pseudo)
+	{
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare
+			('SELECT id, prenom, nom, statut, pseudo, ville, codePostal, mail, dateInscription, dateDerniereConnexion, adressePostale
+			FROM '.self::$nomTable.'
+			WHERE pseudo=:pseudo
+			AND validation_hash = \'\''
+		);
+		$requete->bindValue(':pseudo',$pseudo,PDO::PARAM_STR);
+		if($requete->execute())
+		{
+			$champs = $requete->fetch();
+			$requete->closeCursor();
+			return new Membre($champs);
+		}
+		else
+		{
+			$messages = Messages::getInstance();
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+
+	}
+	/**
+		* @brief Récupère un membre depuis la base de données
+		*
 		* @param $id id du membre
 		*
 		* @return Une instance du membre

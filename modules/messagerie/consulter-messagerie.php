@@ -2,6 +2,10 @@
 defined('ALLOWED') or die();
 if($membre = Membre::connecte())
 {
+	if(isset($_GET['from']))
+	{
+		$messages->ajouterSucces('Message envoyé !');
+	}
 	if(!($listeMessages = Message::getMessagesDestinataire($membre)))
 	{
 		$listeMessages = array();

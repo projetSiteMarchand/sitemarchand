@@ -1,6 +1,9 @@
 <?php
 class Message
 {
+	public static $maxSujet = 255;
+	public static $minSujet = 1;
+	
 	private static $nomTable = 'MESSAGE';
 
 	private $idMessage;
@@ -36,8 +39,8 @@ class Message
 	{
 		return array(
 			$this->idMessage,
-			$this->destinataire->pseudo,
-			$this->expediteur->pseudo,
+			$this->destinataire->getpseudo(),
+			$this->expediteur->getPseudo(),
 			$this->contenu,
 			$this->sujet,
 			$this->dateEnvoi,
@@ -85,8 +88,8 @@ class Message
 		$messages = Messages::getInstance();
 		$pdo = PDO2::getInstance();
 		$requete = $pdo->prepare('INSERT INTO '.self::$nomTable.' (idDestinataire,idExpediteur,contenu,sujet,dateEnvoi) VALUES(:idDestinataire,:idExpediteur,:contenu,:sujet, Now())');
-		$requete->bindValue(':idDestinataire',$idDestinataire,PDO::PARAM_INT);
-		$requete->bindValue(':idExpediteur',$idExpediteur,PDO::PARAM_INT);
+		$requete->bindValue(':idDestinataire',$destinataire->getId(),PDO::PARAM_INT);
+		$requete->bindValue(':idExpediteur',$expediteur->getId(),PDO::PARAM_INT);
 		$requete->bindValue(':contenu',$contenu,PDO::PARAM_STR);
 		$requete->bindValue(':sujet',$sujet,PDO::PARAM_STR);
 		if($requete->execute())
@@ -135,7 +138,7 @@ class Message
 
 	}
 
-	public static function getCountMessagesNonLu($membre)
+	public static function getCountMessagesNonLus($membre)
 	{
 		$pdo = PDO2::getInstance();
 		$requete = $pdo->prepare
@@ -169,7 +172,7 @@ class Message
 			('SELECT idMessage, idDestinataire, idExpediteur, contenu, sujet, dateEnvoi, lu
 			FROM '.self::$nomTable.'
 			WHERE idDestinataire = :idDestinataire
-			ORDER BY dateEnvoi'
+			ORDER BY dateEnvoi DESC'
 		);
 		$requete->bindValue(':idDestinataire',$membre->getId(),PDO::PARAM_INT);
 		if(!$requete->execute())
@@ -183,9 +186,9 @@ class Message
 		{
 			$requete->closeCursor();
 			$listeMessages = array();
-			foreach($messages as $message)
+			foreach($messages as $d)
 			{
-				$listeMessages[] = new Message($id, Membre::getMembreId($d['idDestinataire']), Membre::getMembreId($d['idExpediteur']), $d['contenu'], $d['sujet'], $d['dateEnvoi'], $d['lu']);			
+				$listeMessages[] = new Message($d['idMessage'], Membre::getMembreId($d['idDestinataire']), Membre::getMembreId($d['idExpediteur']), $d['contenu'], $d['sujet'], $d['dateEnvoi'], $d['lu']);			
 			}
 			return $listeMessages;
 		}
@@ -208,7 +211,7 @@ class Message
 			('SELECT idMessage, idDestinataire, idExpediteur, contenu, sujet, dateEnvoi, lu
 			FROM '.self::$nomTable.'
 			WHERE idExpediteur = :idExpediteur
-			ORDER BY dateEnvoi'
+			ORDER BY dateEnvoi DESC'
 		);
 		$requete->bindValue(':idExpediteur',$membre->id,PDO::PARAM_INT);
 		if(!$requete->execute())
@@ -222,9 +225,9 @@ class Message
 		{
 			$requete->closeCursor();
 			$listeMessages = array();
-			foreach($messages as $message)
+			foreach($messages as $d)
 			{
-				$listeMessages[] = new Message($id, Membre::getMembreId($d['idDestinataire']), Membre::getMembreId($d['idExpediteur']), $d['contenu'], $d['sujet'], $d['dateEnvoi'], $d['lu']);			
+				$listeMessages[] = new Message($d['idMessage'], Membre::getMembreId($d['idDestinataire']), Membre::getMembreId($d['idExpediteur']), $d['contenu'], $d['sujet'], $d['dateEnvoi'], $d['lu']);			
 			}
 			return $listeMessages;
 		}

@@ -22,7 +22,7 @@ $_SESSION['token'] = hash('crc32',mt_rand());
 			<a class="brand" href="<?php echo SITE;?>"><img src="img/logo.png"/></a>
 			<ul class="nav">
 <?php
-if($membre = Membre::connecte())
+if($membre)
 {
 	echo '			<li><a href="?rubrique=membres&action=deconnexion&token='.$_SESSION['token'].'" title="Déconexion">Déconnexion</a></li>';
 }
@@ -51,7 +51,7 @@ else
 <?php
 if($membre)
 {
-	$countMessagesNonLu = Message::getCountMessagesNonLu($membre);
+	$countMessagesNonLu = $gestionMessagerie->countMessagesNonLus();
 ?>
 					<li><a href="?rubrique=encheres&action=lister-objets-encheris" title="Liste des objets enchéris"><s><i class="icon-list"></i> Liste des objets enchéris</a></s></li>
 					<li><a href="?rubrique=encheres&action=gerer-objets" title="Gérer mes objets"><s><i class="icon-folder-open"></i> Gérer mes objets</a></s></li>
@@ -60,7 +60,7 @@ if($membre)
 					<li><a href="?rubrique=membres&action=consulter-profil" title="Voir mon profil"><i class="icon-eye-open"></i> Voir mon profil</a></li>
 					<li class="nav-header">Messagerie</li>
 					<li><a href="?rubrique=messagerie&action=consulter-messagerie" title="<?php echo $countMessagesNonLu;?> message(s) non-lu(s)"><i class="icon-envelope"></i> <?php echo ($countMessagesNonLu > 0 ? '<b>Consulter messagerie ('.$countMessagesNonLu.')</b>' : 'Consulter messagerie (0)');?></a></li>
-					<li><a href="?rubrique=messagerie&action=envoyer-message" title="Envoyer un message"><s><i class="icon-pencil"></i> Envoyer un message</a></s></li>
+					<li><a href="?rubrique=messagerie&action=envoyer-message" title="Envoyer un message"><i class="icon-pencil"></i> Envoyer un message</a></li>
 <?php
 	if($membre->estAdmin())
 	{
