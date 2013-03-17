@@ -46,6 +46,21 @@ class GestionMessagerie
 		}
 	}
 
+	public function lireMessage($id)
+	{
+		$messages = Messages::getInstance();
+		if(!($message = Message::getMessageId($id)))
+		{
+			return FALSE;
+		}
+		if($message->getDestinataire()->getId() != $this->membre->getId())
+		{
+			return FALSE;
+		}
+		$message->messageLu();
+		return $message;
+	}
+
 	public static function isDestinataireValide($pseudo)
 	{
 		if(!GestionProfil::isPseudoValide($pseudo))

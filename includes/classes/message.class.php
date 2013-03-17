@@ -48,6 +48,11 @@ class Message
 			);
 	}
 
+	public function getDestinataire()
+	{
+		return $this->destinataire;
+	}
+
 	/**
 		* @brief Met le message en lu
 		*

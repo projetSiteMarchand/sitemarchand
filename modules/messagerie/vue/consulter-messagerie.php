@@ -21,7 +21,9 @@ foreach($listeMessages as $message)
 	}
 	echo '
 		<tr'.($lu ? '' : ' class="info"').'>
-			<td>'.$sujet.'</td>
+			<td>
+<a href="?rubrique=messagerie&action=lire-message&id='.$id.'" title="Lire le message">'.$sujet.'</a>
+			</td>
 			<td>'.$expediteur.'</td>
 			<td>'.$dateEnvoi.'</td>
 			<td>
