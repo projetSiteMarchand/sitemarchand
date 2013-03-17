@@ -4,7 +4,7 @@
 	<tr>
 		<th width="40%">Sujet</th>
 		<th>De</th>
-		<th width="25%">Reçu le</th>
+		<th width="25%">Reçu</th>
 		<th width="10%">Action</th>
 	</tr>
 </thead>
@@ -13,6 +13,7 @@
 foreach($listeMessages as $message)
 {
 	list($id, $destinataire, $expediteur, $sujet, $contenu, $dateEnvoi, $lu) = protegerAffichage($message->getInformations());
+	$dateEnvoi = ago($dateEnvoi);
 	if(!$lu)
 	{
 		$expediteur = '<b>'.$expediteur.'</b>';

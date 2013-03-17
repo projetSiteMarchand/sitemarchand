@@ -26,7 +26,7 @@
 		<td><?php echo $mail;?></td>
 	</tr>
 	<tr>
-		<td>Date de dernière connexion</td>
+		<td>Dernière connexion</td>
 		<td><?php echo $dateDerniereConnexion;?></td>
 	</tr>
 	<tr>

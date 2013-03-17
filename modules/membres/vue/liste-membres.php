@@ -24,7 +24,8 @@ foreach($membres as $membre)
 			<td>'.ucwords(strtolower($statut)).'</td>
 			<td>
 <a href="?rubrique=membres&action=supprimer-profil&id='.$id.'&token='.$_SESSION['token'].'" title="Supprimer le membre"><i class="icon-remove"></i></a>&nbsp;
-<a href="?rubrique=membres&action=modifier-profil&id='.$id.'" title="Modifier le profil du membre"><i class="icon-wrench"></i></a>
+<a href="?rubrique=membres&action=modifier-profil&id='.$id.'" title="Modifier le profil du membre"><i class="icon-wrench"></i></a>&nbsp;
+<a href="?rubrique=membres&action=consulter-profil&id='.$id.'" title="Voir le profil du membre"><i class="icon-eye-open"></i></a>
 			</td>
 		</tr>';
 }

@@ -5,6 +5,7 @@ if($membre && !empty($_GET['id']) && nombreValide($_GET['id']))
 	if($message = $gestionMessagerie->lireMessage($_GET['id']))
 	{
 		list($id, $destinataire, $expediteur, $sujet, $contenu, $dateEnvoi, $lu) = protegerAffichage($message->getInformations());
+		$dateEnvoi = ago($dateEnvoi);
 		$titre = 'Lire un message';
 		include HEADER;
 		include VUE.'lire-message.php';
