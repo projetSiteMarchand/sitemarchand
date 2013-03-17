@@ -6,9 +6,5 @@
 	<p><?php echo $contenu;?></p>
 	<small><?php echo $expediteur;?>, <?php echo lcfirst($dateEnvoi);?></small>
 </blockquote>
-	<div class="control-group">
-		<div class="controls">
-			<input type="submit" class="btn btn-primary" name="submit" value="Répondre"/>
-		</div>
-	</div>
+	<input type="submit" class="btn " name="submit" value="Répondre"/>
 </form>
