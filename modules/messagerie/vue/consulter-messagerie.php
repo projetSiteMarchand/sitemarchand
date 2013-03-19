@@ -12,8 +12,8 @@
 <?php
 foreach($listeMessages as $message)
 {
-	list($idOriginal, $destinataireOriginal, $expediteurOriginal, $sujetOriginal, $contenuOriginal, $dateEnvoiOriginal, $luOriginal) = $message->getInformations();
-	list($id, $destinataire, $expediteur, $sujet, $contenu, $dateEnvoi, $lu) = protegerAffichage($message->getInformations());
+	list($idOriginal, $destinataireOriginal, $expediteurOriginal,$contenuOriginal, $sujetOriginal,  $dateEnvoiOriginal, $luOriginal) = $message->getInformations();
+	list($id, $destinataire, $expediteur,$contenu, $sujet,  $dateEnvoi, $lu) = protegerAffichage($message->getInformations());
 	$dateEnvoi = ago($dateEnvoi);
 	if(!$lu)
 	{

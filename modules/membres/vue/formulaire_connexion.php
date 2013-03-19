@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="captcha">Captcha</label>
+		<label class="control-label" for="captcha">Captcha (Majuscule)</label>
 		<div class="controls">
 			<input type="text" id="captcha" name="captcha" required="required" tabindex="3" placeholder="Captcha"/><br /><br />
 			<img src="captcha.php" alt="Image Captcha" width="320px" height="60px"/>

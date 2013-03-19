@@ -177,7 +177,7 @@ insert into MEMBRE VALUES(3, 'pauvre','LePauvre','membre','pauvre','pauvreTown',
 -- philosophe:membre
 insert into MEMBRE VALUES(4, 'philosophe','LePhilosophe','membre','philosophe','philoTown','31337','philo@membre.com',Now(),Now(),'philo street','06b62ebef1e65ae4d8a4cf4c3fb4e33e38c6b556cb89d2e816b3a3facc2e3ab48cbf0b50b0a3dbe7df609ab7df816ed2aa75a275772b0e4a2271f7d94f76897d','13ZWUxZTkwMDdhNWYyYTA1','',0);
 
-insert into MESSAGE VALUES(1, 1, 2, 'Mahn Mahna', 'The question is, what is a Mahna Mahna ?', Now()-600, 1);
-insert into MESSAGE VALUES(2, 2, 1, 'Re: Mahn Mahna', 'The question is, who cares ?', Now(), 0);
-insert into MESSAGE VALUES(3, 1, 4, 'Les hommes', 'J''ai un profond respect pour le mépris que j''ai des hommes', Now()-300, 0);
-insert into MESSAGE VALUES(4, 1, 3, 'Les pauvres', 'Les pauvres depuis le début de l''humanité ont toujours eu des goûts simples.', Now()-800, 0);
+insert into MESSAGE VALUES(1, 1, 2,  'The question is, what is a Mahna Mahna ?', 'Mahn Mahna',Now()-600, 1);
+insert into MESSAGE VALUES(2, 2, 1,  'The question is, who cares ?','Re: Mahn Mahna', Now(), 0);
+insert into MESSAGE VALUES(3, 1, 4, 'J\'ai un profond respect pour le mépris que j\'ai des hommes', 'Les hommes', Now()-300, 0);
+insert into MESSAGE VALUES(4, 1, 3, 'Les pauvres depuis le début de l\'humanité ont toujours eu des goûts simples.', 'Les pauvres', Now()-800, 0);
