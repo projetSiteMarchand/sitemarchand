@@ -3,6 +3,7 @@ class Produit
 {
     public static $imagesFolder = 'img/produits/';
     public static $maxNomProduit = 255;
+    public static $minNomProduit = 1;
 
 
     private $id;

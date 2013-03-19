@@ -64,7 +64,7 @@ if($membre)
 ?>
 					<li class="nav-header">Administration</li>
 					<li><a href="?rubrique=membres&action=lister-membres" title="Liste des membres"><i class="icon-user"></i> Gestion des membres</a></li>
-					<li><a href="?rubrique=produits&action=gerer-produits" title="Catalogue des produits"><s><i class="icon-list-alt"></i> Gestion des produits</a></s></li>
+					<li><a href="?rubrique=produits&action=gerer-produits" title="Catalogue des produits"><i class="icon-list-alt"></i> Gestion des produits</a></li>
 
 <?php
 	}

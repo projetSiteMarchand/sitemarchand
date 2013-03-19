@@ -4,7 +4,7 @@ if($membre && $membre->estAdmin())
 {
 	if(isset($_POST['submit']) && !empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 	{
-		//$gestionProduits->ajouterProduit($_POST);
+		GestionProduits::ajouterProduit($_POST);
 	}
 	$nom_original = (empty($_POST['nom']) ? '' : protegerAffichage($_POST['nom']));
 	$stock_original = (empty($_POST['stock']) ? '' : protegerAffichage($_POST['stock']));
