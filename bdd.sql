@@ -128,6 +128,7 @@ drop table if exists COMMANDE;
 create table COMMANDE
 (
     idCommande int NOT NULL,
+    idMembre int NOT NULL,
     prixLivraison int NOT NULL,
     primary key(idCommande)
 );
@@ -156,6 +157,8 @@ alter table PRODUIT_ENCHERE add foreign key fk_prode_pro(idProprietaire) REFEREN
 
 alter table COMMENTAIRE add foreign key fk_com_mem(idMembre) REFERENCES MEMBRE(id);
 alter table COMMENTAIRE add foreign key fk_com_prod(idProduit) REFERENCES PRODUIT_CATALOGUE(idProduit);
+
+alter table COMMANDE add foreign key fk_comm_id_Membre(idMembre) REFERENCES MEMBRE(id);
 
 alter table ENCHERE add foreign key fk_ench_evalv(idEvaluationVendeur) REFERENCES MEMBRE(id);
 alter table ENCHERE add foreign key fk_ench_evala(idEvaluationAcheteur) REFERENCES MEMBRE(id);
