@@ -95,8 +95,38 @@ class GestionProduits
         return TRUE;
     }
 
-	public static function ajouterCommentaireProduit($post)
+	public static function modifierProduit($post, $produit)
 	{
+		$nomProduit = empty($post['nom']) ? '' : $post['nom'];
+		$stock = empty($post['stock']) ? '' : $post['stock'];
+		$prixUnitaire = empty($post['prixUnitaire']) ? '' : $post['prixUnitaire'];
+        $valid = true;
+
+        if(!self::isNomProduitValide($nomProduit))
+        {
+            $valid = false;
+        }
+        if(!self::isPrixUnitaireValide($prixUnitaire))
+        {
+            $valid = false;
+        }
+        if(!self::isStockValide($stock))
+        {
+            $valid = false;
+        }
+
+        if($valid)
+        {
+            if($produit->modifierProduit($nomProduit,$stock,$prixUnitaire))
+            {
+                redirect(SITE.'?rubrique=produits&action=gerer-produits&from=modifier-produit');
+            }
+            else
+            {
+		        $messages = Messages::getInstance();
+                $messages->ajouterErreur('Impossible de modifier le produit pour le moment');
+            }
+        }
 	}
 
 	public static function recupererInformationsProduit($produit)

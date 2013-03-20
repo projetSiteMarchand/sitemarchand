@@ -25,6 +25,29 @@ class ProduitCatalogue extends Produit
         );
     }
 
+	public function modifierProduit($nomProduit, $stock, $prixUnitaire)
+	{
+		$id = $this->id;
+		$messages = Messages::getInstance();
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('UPDATE '.self::$nomTable.' SET nomProduit=:nomProduit, stock=:stock,prixUnitaire=:prixUnitaire WHERE idProduit=:id');
+		$requete->bindValue(':nomProduit',$nomProduit,PDO::PARAM_STR);
+		$requete->bindValue(':stock',$stock,PDO::PARAM_INT);
+		$requete->bindValue(':prixUnitaire',$prixUnitaire,PDO::PARAM_INT);
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
+	}
+
     public function supprimer()
     {
 		$id = $this->id;
