@@ -10,12 +10,12 @@ class Produit
     private $nomProduit;
     private $descriptifs = array();
 
-    public function getAvatarPath()
+    public function getImagePath()
     {
         $images_path = self::$imagesFolder.$this->id.'.png';
         if(!file_exists(BASE.'public/'.$images_path))
         {
-            $images_path = self::$imagesFolder.'noavatar.png';
+            $images_path = self::$imagesFolder.'noimage.jpg';
         }
         return $images_path;
     }

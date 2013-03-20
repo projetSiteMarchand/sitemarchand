@@ -1,11 +1,15 @@
 <?php
 class GestionProduits
 {
-	public static function supprimerProduit($id)
+	public static function supprimerProduitId($id)
 	{
 		if($produit = ProduitCatalogue::getProduitId($id))
 		{
-			return $produit->supprimer();
+			if($produit->supprimer())
+            {
+	            redirect(SITE.'?rubrique=produits&action=gerer-produits&from=supprimer-produit');
+            }
+
 		}
 		return FALSE;
 	}
@@ -90,10 +94,6 @@ class GestionProduits
         }
         return TRUE;
     }
-
-	public static function modifierProduit($post)
-	{
-	}
 
 	public static function ajouterCommentaireProduit($post)
 	{
