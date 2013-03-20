@@ -27,7 +27,22 @@ class ProduitCatalogue extends Produit
 
     public function supprimer()
     {
-        return TRUE;
+		$id = $this->id;
+		$messages = Messages::getInstance();
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE idProduit=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
     }
 
     public static function getProduitId($id)
@@ -112,6 +127,25 @@ class ProduitCatalogue extends Produit
 	        $requete->closeCursor();
 	        return FALSE;
 	    }
+    }
+
+    public static function supprimerProduitId($id)
+    {
+		$messages = Messages::getInstance();
+		$pdo = PDO2::getInstance();
+		$requete = $pdo->prepare('DELETE FROM '.self::$nomTable.' WHERE idProduit=:id');
+		$requete->bindValue(':id',$id,PDO::PARAM_INT);
+		if($requete->execute())
+		{
+			$requete->closeCursor();
+			return TRUE;
+		}
+		else
+		{
+			$messages->ajouterErreurSQL($requete->errorInfo());
+			$requete->closeCursor();
+			return FALSE;
+		}
     }
 }
 ?>

@@ -27,7 +27,7 @@ foreach($produits as $produit)
 <div class="btn-group">
 <a class="btn btn-small" href="?rubrique=produits&action=supprimer-produit&id='.$id.'&token='.$_SESSION['token'].'" title="Supprimer le produit"><i class="icon-remove"></i></a>&nbsp;
 <a class="btn btn-small" href="?rubrique=produits&action=modifier-produit&id='.$id.'" title="Modifier le produit"><i class="icon-wrench"></i></a>&nbsp;
-<a class="btn btn-small" href="?rubrique=produit&action=consulter-produit&id='.$id.'" title="Voir le détail du produit"><i class="icon-eye-open"></i></a>
+<a class="btn btn-small" href="?rubrique=produits&action=consulter-produit&id='.$id.'" title="Voir le détail du produit"><i class="icon-eye-open"></i></a>
 </div>
 			</td>
 		</tr>';
