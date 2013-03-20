@@ -7,24 +7,10 @@ if($membre)
 }
 elseif(!empty($_POST['token']) && $_POST['token'] == $_SESSION['token'])
 {
-	if(empty($_POST['captcha']) || empty($_POST['pseudo']) || empty($_POST['password']))
+	if($membre = GestionConnexions::connexion($_POST['pseudo'],$_POST['password']))
 	{
-		$messages->ajouterErreur('Veuillez remplir tous les champs');
-	}
-	else
-	{
-		if($_POST['captcha'] == $_SESSION['captcha'])
-		{
-			if($membre = GestionConnexions::connexion($_POST['pseudo'],$_POST['password']))
-			{
-				redirect(SITE.'?from=connexion');
-				die();
-			}
-		}
-		else
-		{
-			$messages->ajouterErreur('Le captcha n\'est pas bon.');
-		}
+		redirect(SITE.'?from=connexion');
+		die();
 	}
 }
 else if(isset($_GET['from']))
