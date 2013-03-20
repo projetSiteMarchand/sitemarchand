@@ -24,5 +24,11 @@ class Produit
     {
         return $this->id;
     }
+
+    public function getNom()
+    {
+        return $this->nomProduit;
+    }
+
 }
 ?>
