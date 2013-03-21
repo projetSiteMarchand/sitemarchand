@@ -1,10 +1,11 @@
 <?php
 
-class  Panier
+class Panier
 {
     private $list_produit;
     private $nb_item = 0;
-    public function __construct($prod)
+
+    public function __construct()
     {
 
     }

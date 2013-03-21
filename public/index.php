@@ -34,6 +34,7 @@ require_once CLASSES.'produitCatalogue.class.php';
 require_once CLASSES.'produitEnchere.class.php';
 require_once CLASSES.'gestion_produits.class.php';
 require_once CLASSES.'gestion_encheres.class.php';
+require_once CLASSES.'panier.class.php';
 
 if(!headers_sent())
 {
