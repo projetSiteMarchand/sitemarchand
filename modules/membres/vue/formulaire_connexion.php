@@ -14,15 +14,8 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="captcha">Captcha (Majuscule)</label>
 		<div class="controls">
-			<input type="text" id="captcha" name="captcha" required="required" tabindex="3" placeholder="Captcha"/><br /><br />
-			<img src="captcha.php" alt="Image Captcha" width="320px" height="60px"/>
-		</div>
-	</div>
-	<div class="control-group">
-		<div class="controls">
-			<input type="submit" value="Se connecter" tabindex="4" class="btn"/>
+			<input type="submit" value="Se connecter" tabindex="3" class="btn"/>
 		</div>
 	</div>
 </form>

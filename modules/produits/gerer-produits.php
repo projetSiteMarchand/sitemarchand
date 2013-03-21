@@ -12,6 +12,10 @@ if($membre && $membre->estAdmin())
 		{
 			$messages->ajouterInformation('Le produit a été ajouté');
 		}
+		else if($_GET['from'] == 'modifier-produit')
+		{
+			$messages->ajouterInformation('Le produit a été modifié');
+		}
 	}
 
 	if(!($produits = GestionProduits::recupererListeProduits()))
