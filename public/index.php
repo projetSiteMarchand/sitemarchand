@@ -49,7 +49,9 @@ $membre = GestionConnexions::membreConnecte();
 if($membre)
 {
 	$gestionMessagerie = new GestionMessagerie($membre);
+    $panier_en_ligne= new Panier();//TODO differecier !
 }
+$panier_hors_ligne= new Panier();
 
 $_GET['action'] = (empty($_GET['action'])) ? 'accueil' : $_GET['action'];
 $_GET['rubrique'] = (empty($_GET['rubrique'])) ? 'site' : $_GET['rubrique'];
